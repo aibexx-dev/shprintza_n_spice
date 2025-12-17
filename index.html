@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sandbox App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Load error interceptor after DOM ready to avoid race condition
+      // The error interceptor is baked into the template at build time
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          const script = document.createElement('script');
+          script.type = 'module';
+          script.src = '/error-interceptor.js';
+          script.onerror = function() {
+            console.warn('[Error Interceptor] Failed to load - error detection disabled');
+          };
+          document.head.appendChild(script);
+        });
+      } else {
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = '/error-interceptor.js';
+        script.onerror = function() {
+          console.warn('[Error Interceptor] Failed to load - error detection disabled');
+        };
+        document.head.appendChild(script);
+      }
+    </script>
+    <script src="/visual-editor.js" onerror="console.error('[Visual Editor] Failed to load visual-editor.js - file may not exist')"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
