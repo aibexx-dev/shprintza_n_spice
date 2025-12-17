@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Warm, vibrant colors designed for children: coral-red for primary actions and headings (energetic and friendly), golden-yellow for secondary elements and highlights (cheerful and inviting), and fresh green for interactive elements like quiz answers (playful and encouraging). These colors are high-contrast, easy for young eyes to distinguish, and create an emotionally positive reading experience. */
+  --primary: rgb(255, 107, 107);
+  --secondary: rgb(255, 193, 7);
+  --accent: rgb(76, 175, 80);
+  --background: rgb(255 255 255);
+  --foreground: rgb(23 23 23);
+  --text-primary: rgb(23 23 23);
+  --text-secondary: rgb(115 115 115);
+  --muted: rgb(148 163 184);
+  --border: rgb(226 232 240);
+}
+
+.dark {
+  --primary: rgb(255, 107, 107);
+  --secondary: rgb(255, 193, 7);
+  --accent: rgb(76, 175, 80);
+  --background: rgb(15 23 42);
+  --foreground: rgb(248 250 252);
+  --text-primary: rgb(248 250 252);
+  --text-secondary: rgb(148 163 184);
+  --muted: rgb(100 116 139);
+  --border: rgb(51 65 85);
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
