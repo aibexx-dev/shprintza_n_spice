@@ -934,7 +934,7 @@ const PageContainer: React.FC = () => {
       {/* Hidden Audio Element */}
       <audio
         ref={audioRef}
-        src="/audio/story-audio.wav"
+        src="/audio/story-audio.mp3"
         preload="auto"
       />
 
