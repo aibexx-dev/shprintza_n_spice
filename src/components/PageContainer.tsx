@@ -1,7 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ChevronLeft, ChevronRight, Volume2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Volume2, Square, Play, Pause } from 'lucide-react';
+
+// Audio timestamps for each page (in seconds)
+const PAGE_AUDIO_TIMESTAMPS: { [key: number]: { start: number; end: number } } = {
+  0: { start: 4, end: 12 },       // cover
+  1: { start: 13, end: 32 },      // dedication
+  2: { start: 33, end: 84 },      // page 1 (1:24 = 84s)
+  3: { start: 86, end: 160 },     // page 2 (1:26-2:40)
+  4: { start: 160, end: 222 },    // page 3 (2:40-3:42)
+  5: { start: 223, end: 258 },    // page 4 (3:43-4:18)
+  6: { start: 261, end: 336 },    // page 5 (4:21-5:36)
+  7: { start: 337, end: 433 },    // page 6 (5:37-7:13)
+  8: { start: 435, end: 462 },    // page 7 (7:15-7:42)
+  9: { start: 463, end: 483 },    // quiz question 1 (7:43-8:03)
+  10: { start: 484, end: 501 },   // quiz question 2 (8:04-8:21) - note: handled via quiz index
+  11: { start: 501, end: 521 },   // quiz question 3 (8:21-8:41)
+  12: { start: 521, end: 533 },   // quiz question 4 (8:41-8:53)
+  // After quiz pages:
+  13: { start: 534, end: 563 },   // page 8 (8:54-9:23) - Modeh Ani
+  14: { start: 563, end: 604 },   // page 9 (9:23-10:04) - Giggle Page
+  15: { start: 606, end: 677 },   // page 10 (10:06-11:17) - Spice's Song
+  16: { start: 678, end: 720 },   // page 11/end (11:18-end) - back cover
+};
+
+// Quiz-specific timestamps (when on interactive_quiz page)
+const QUIZ_QUESTION_TIMESTAMPS: { [key: number]: { start: number; end: number } } = {
+  0: { start: 463, end: 483 },    // question 1 (7:43-8:03)
+  1: { start: 484, end: 501 },    // question 2 (8:04-8:21)
+  2: { start: 501, end: 521 },    // question 3 (8:21-8:41)
+  3: { start: 521, end: 533 },    // question 4 (8:41-8:53)
+};
 
 interface Question {
   question: string;
@@ -25,15 +55,43 @@ const PageContainer: React.FC = () => {
   const [quizQuestionIndex, setQuizQuestionIndex] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isAutoPlay, setIsAutoPlay] = useState(false);
+  
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const timeUpdateRef = useRef<((e: Event) => void) | null>(null);
+  const currentPageIndexRef = useRef(currentPageIndex);
+  const isAutoPlayRef = useRef(isAutoPlay);
+  const quizQuestionIndexRef = useRef(quizQuestionIndex);
+  
+  // Keep refs in sync with state
+  useEffect(() => {
+    currentPageIndexRef.current = currentPageIndex;
+  }, [currentPageIndex]);
+  
+  useEffect(() => {
+    isAutoPlayRef.current = isAutoPlay;
+  }, [isAutoPlay]);
+  
+  useEffect(() => {
+    quizQuestionIndexRef.current = quizQuestionIndex;
+  }, [quizQuestionIndex]);
   
   // Toggle this to switch between layouts: true = vertical (text-image-text), false = side-by-side (image | text)
-  const useVerticalLayout = true;
+  const useVerticalLayout = false;
+  
+  // Set volume to max on mount
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 1.0;
+    }
+  }, []);
 
   const pages: Page[] = [
     {
       page_type: 'cover',
       text_top: 'Shprintza \'n Spice: Modeh Ani Song',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/Front%20Cover.jpg'],
+      images: ['/images/RESIZE 3_4 - Front Cover.jpg'],
       text_bottom: 'Written by Rabbi Yossi Srugo',
       quiz_question: '',
       quiz_answers: []
@@ -41,7 +99,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'dedication',
       text_top: 'Dedicated to all the children I\'ve had the privilege of welcoming into the world — performing their Brit Milah, the sacred moment when their Neshama first enters their body. — Rabbi Yossi Srugo',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/Dedication%20page.jpg'],
+      images: ['/images/RESIZE 3_4 - Dedication page.jpg'],
       text_bottom: 'Happy Reading!',
       quiz_question: '',
       quiz_answers: []
@@ -49,7 +107,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%201.1%20top%20Left.jpg', 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%201.2%20%20top%20Right.jpg', 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%201.3%20%20bottom.jpg'],
+      images: ['/images/page_1_1_top Left.jpg', '/images/page_1_2_top_Right.jpg', '/images/RESIZE 3_2 - page 1.3  bottom.jpg'],
       text_bottom: 'Shai opened his eyes and sighed a big, sleepy sigh.\nShai: "Ugh… I\'m soooo sad. I don\'t have a new toy today."\nSuddenly, Shprintza appeared beside him, her face glowing with warmth.\nShprintza: "Good morning, Shai! You know, your biggest gift isn\'t a new toy."\nShai: "It\'s not? But toys are the BEST!"\nSpice flapped dramatically onto the pillow.\nSpice: "Koo-koo-ree-koo! Boker Tov, yeladim! The biggest gift is… a BAG FULL OF YUMMY WORMS!"\nShai: "EWWWW! Spice, that\'s gross!"',
       quiz_question: '',
       quiz_answers: []
@@ -57,7 +115,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%202.1%20top.jpg', 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%202.2%20bottom.jpg'],
+      images: ['/images/RESIZE 3_2 - page 2.1 top.jpg', '/images/RESIZE 3_2 - page 2.2 bottom.jpg'],
       text_bottom: 'Shprintza: "Shai, every single morning Hashem gives us the most amazing present of all."\nShai: "Better than a LEGO spaceship with two astronauts AND a laser cannon?"\nSpice: "Better than a mountain of cornflakes with extra seeds on top?"\nShprintza: (smiling patiently) "Even better! Hashem gives you back your Neshama — your soul!"\nShai: "My Nesh-a-ma? What\'s that? Can I play with it?"\nShprintza: "Your Neshama is the spark of Hashem inside you — it\'s what makes you alive! It helps you think, feel, love, and be kind."\nShai: "Ohhh! Is THAT why I can think of silly jokes?"\nSpice: "Or FLYYYY?!" (flaps wildly and bumps into the lamp)\nShprintza: (laughing softly) "Exactly, Shai."',
       quiz_question: '',
       quiz_answers: []
@@ -65,7 +123,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%203.jpg'],
+      images: ['/images/RESIZE 3_4 - page 3.jpg'],
       text_bottom: 'Shprintza: "When we sleep, our Neshama rests with Hashem. It goes up to Heaven! And when we wake up… Hashem sends it right back to us."\nShai: "Whoa! So my Neshama goes on a trip every night?"\nShprintza: "Yes! That\'s why we say Modeh Ani the very first thing when we wake up — even before we get out of bed, even before we wash our hands — to thank Hashem for giving us life again."\nSpice: "I\'m thankful for my magnificent feathers!" (poses like a supermodel)\nShai: "So I get my soul back every single morning? Even on Mondays?!"\nShprintza: "Every beautiful day, Shai. Every single one."\nSpice: "And I get… BREAKFAST! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: []
@@ -73,7 +131,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%204%20.jpg'],
+      images: ['/images/RESIZE 3_4 - page 4 .jpg'],
       text_bottom: 'Shprintza: "Let\'s celebrate being alive!"\nThey begin to sing and dance around the room:\nShprintza & Shai: "I\'m alive! I\'m alive! Hashem gave me my soul inside!"\nSpice: (spinning in circles) "I\'m aliiiive! Koo-koo-ree-koo! ¡Estoy vivo! Ani chai! Koo-koo-ree-koo!"\nShai: (jumping on the bed) "This is better than toys!"',
       quiz_question: '',
       quiz_answers: []
@@ -81,7 +139,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%205.1.jpg'],
+      images: ['/images/RESIZE 3_4  - page 5.jpg'],
       text_bottom: 'Shai: "Shprintza, did everyone always say Modeh Ani when they woke up?"\nShprintza: (sitting down beside him) "That\'s a wonderful question! Let me tell you about King David. Long, long ago, King David kept a beautiful harp beside his bed."\nShai: "A harp? In his BEDROOM?"\nShprintza: "Yes! Every morning at midnight, a gentle breeze from the North would blow through his window and make the harp sing — ting-tong-ting!"\nSpice: (strumming air guitar) "Like a rockstar! Koo-koo-ree-koo!"\nShprintza: "King David would wake up and immediately sing thanks to Hashem for his life — for his red hair, his eyes, his ability to play music… even his toes!"\nShai: (wiggling his toes) "Even toes? That\'s silly!"\nShprintza: "King David knew that every part of him was a gift. That\'s what Modeh Ani teaches us — to be grateful for everything, big and small."',
       quiz_question: '',
       quiz_answers: []
@@ -89,7 +147,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%206.2.jpg', 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%206.2(1).jpg', 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%206.3%20.jpg'],
+      images: ['/images/RESIZE 1_1 - page 6.2.jpg', '/images/RESIZE 1_1 - page 6.2 (2).jpg', '/images/RESIZE 3_2 - page 6.3 .jpg'],
       text_bottom: 'The next morning, Shai woke up looking for his favorite toy car.\nShai: "Where is it? Where\'s my red race car? I NEED IT!"\nHe looked under the bed. Not there. He looked in his toy box. Not there either!\nShai:  Oy vey! "This is the WORST day ever”!\nSpice: (landing on his shoulder) "Shai! Shai! Remember what we learned?"\nShai: "But Spice… I really wanted to play with it!"\nShprintza: (kneeling down gently) "I know you\'re disappointed, Shai. But let\'s think — what gift do you have right now, even without your toy car?"\nShai paused. He touched his chest where his Neshama was.\nShai: (taking a deep breath) "My Neshama! Modeh Ani... thank You, Hashem, for giving me back my soul. Thank You for my eyes to look for toys, my hands to play, my family who loves me, and... and even for Spice, even when he\'s being silly!"\nSpice: "I\'m not silly — I\'m Koo-koo-ree-koo!"\nJust then, Shai’s little sister walked in, pushing the red race car.\nShai: "There it is! She had it the whole time!"\nShprintza: (smiling warmly) "See? When we start with gratitude, everything feels better."',
       quiz_question: '',
       quiz_answers: []
@@ -97,7 +155,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'interactive_quiz',
       text_top: '',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/Quiz%201%20.jpg'],
+      images: ['/images/RESIZE 3_2 - Quiz 1 .jpg'],
       text_bottom: 'Shprintza: "Every morning, start with gratitude." \nShai: "Even before slippers!"\nSpice: "Especially before breakfast! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: [],
@@ -127,7 +185,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '🌟 Modeh Ani 🌟',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/Page%208.1%20.jpg'],
+      images: ['/images/RESIZE 3_4 - Page 8 .jpg'],
       text_bottom: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה רַבָּה אֱמוּנָתֶךָ\n\nModeh Ani lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha.\n\nMeaning: Thank You, Hashem, for returning my soul to me with kindness. How great is Your faithfulness!',
       quiz_question: '',
       quiz_answers: []
@@ -135,7 +193,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: 'Giggle Page',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/page%209.1%20.jpg'],
+      images: ['/images/RESIZE 3_4 - page 9 .jpg'],
       text_bottom: 'Shai: "Shprintza… does my soul come wrapped like a Chanukah present with a bow?"\nSpice: "Of course! In bubble wrap — pop! pop! pop! Amen!"\nShprintza: (giggling) "Modeh Ani means \'I thank You.\'"\nSpice: "Ohhh… I thought it meant \'More Deli, honey!\'"\nShai: "Or \'More Silly Money!\'"\nSpice: "Or \'Moody Bunny!\'"\nEveryone bursts out laughing and tumbles onto the pillows.\nShprintza: (still giggling) "You two are impossible!"',
       quiz_question: '',
       quiz_answers: []
@@ -143,7 +201,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '🌟 Spice\'s Song 🌟',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/Quiz%202.jpg'],
+      images: ['/images/RESIZE 3_4 - page 10 .jpg'],
       text_bottom: 'Spice: (clearing his throat dramatically, standing on the bedpost) TTTO You’re my sunshine\n"Every morning when I\'m still sleeping, I open up my eyes and say, Thank You, Hashem, for my Neshama, And for giving me another day!"\nThen VERY loudly and proudly: continue w Same tune\n"Modeh Ani Lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha!"\nShprintza: (clapping) "Beautiful, Spice! You remembered every word!"\nShai: "You sound even better than a real rooster!"\nSpice: (puffing up his chest) "I\'m not just any chicken — I\'m a THANKFUL chicken! A GRATEFUL chicken! A—"\nShai & Shprintza: "We know, Spice!"\nSpice: "KOO-KOO-REE-KOOOOO!!!"',
       quiz_question: '',
       quiz_answers: []
@@ -151,7 +209,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'back_cover',
       text_top: 'The End',
-      images: ['https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/images/back%20cover.jpg'],
+      images: ['/images/RESIZE 3_4 - back cover.jpg'],
       text_bottom: 'A joyful bedtime and morning story that teaches gratitude, laughter, and one of the most important prayers every Jewish child learns — Modeh Ani.\nJoin silly Shai, patient Shprintza, and spectacular Spice the chicken as they discover that the greatest gift we receive isn\'t a toy or a treat — it\'s the gift of life itself, given to us by God, fresh every single morning!',
       quiz_question: '',
       quiz_answers: []
@@ -182,9 +240,160 @@ const PageContainer: React.FC = () => {
     }
   };
 
+  // Get timestamps for a given page index and quiz question index
+  const getTimestamps = useCallback((pageIdx: number, quizIdx: number, page: Page) => {
+    if (page.page_type === 'interactive_quiz') {
+      return QUIZ_QUESTION_TIMESTAMPS[quizIdx];
+    }
+    return PAGE_AUDIO_TIMESTAMPS[pageIdx];
+  }, []);
+
+  // Play audio for current page
+  const playCurrentPageAudio = useCallback((autoAdvance: boolean = false) => {
+    if (!audioRef.current) return;
+    
+    const pageIdx = currentPageIndexRef.current;
+    const quizIdx = quizQuestionIndexRef.current;
+    const page = pages[pageIdx];
+    const timestamps = getTimestamps(pageIdx, quizIdx, page);
+    
+    console.log('Playing audio for page:', pageIdx, 'quiz question:', quizIdx, 'timestamps:', timestamps);
+    
+    if (!timestamps) {
+      console.log('No audio timestamps for this page');
+      // If autoplay and no timestamps, move to next page
+      if (autoAdvance && pageIdx < totalPages - 1 && page.page_type !== 'interactive_quiz') {
+        setCurrentPageIndex(prev => prev + 1);
+        setSelectedAnswer('');
+        setQuizQuestionIndex(0);
+        setQuizCompleted(false);
+      }
+      return;
+    }
+    
+    // Remove any existing timeupdate listener
+    if (timeUpdateRef.current) {
+      audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
+    }
+    
+    // Set the start time and play
+    audioRef.current.currentTime = timestamps.start;
+    audioRef.current.play().catch(err => console.error('Audio playback error:', err));
+    setIsPlaying(true);
+    
+    // Store end time and autoAdvance flag for the checkTime closure
+    const endTime = timestamps.end;
+    
+    // Set up listener to stop at end time and optionally advance
+    const checkTime = () => {
+      if (audioRef.current && audioRef.current.currentTime >= endTime) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+        
+        // Use refs to get current values
+        const currentIdx = currentPageIndexRef.current;
+        const currentPageData = pages[currentIdx];
+        
+        // If autoplay is enabled and not on quiz page, advance to next page
+        if (isAutoPlayRef.current && currentPageData.page_type !== 'interactive_quiz') {
+          if (currentIdx < totalPages - 1) {
+            setCurrentPageIndex(currentIdx + 1);
+            setSelectedAnswer('');
+            setQuizQuestionIndex(0);
+            setQuizCompleted(false);
+          } else {
+            // Reached the end, turn off autoplay
+            setIsAutoPlay(false);
+          }
+        }
+        // Note: For quiz pages, audio just stops after each question
+        // User must answer correctly before next question's audio can be played manually
+      }
+    };
+    
+    timeUpdateRef.current = checkTime;
+    audioRef.current.addEventListener('timeupdate', checkTime);
+  }, [totalPages, getTimestamps, pages]);
+
+  // Handle autoplay page changes - only trigger when page changes, not when autoplay is first enabled
+  const prevPageIndexRef = useRef(currentPageIndex);
+  
+  useEffect(() => {
+    // Only auto-play if the page actually changed (not on initial autoplay toggle)
+    const pageChanged = prevPageIndexRef.current !== currentPageIndex;
+    prevPageIndexRef.current = currentPageIndex;
+    
+    if (isAutoPlay && currentPage.page_type !== 'interactive_quiz' && pageChanged) {
+      // Small delay to let the page render before playing
+      const timer = setTimeout(() => {
+        playCurrentPageAudio(true);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [currentPageIndex, isAutoPlay, currentPage.page_type, playCurrentPageAudio]);
+
+  // Stop audio and clean up when page changes manually or autoplay is toggled off
+  useEffect(() => {
+    if (!isAutoPlay && audioRef.current) {
+      // Clean up listener
+      if (timeUpdateRef.current) {
+        audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
+        timeUpdateRef.current = null;
+      }
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, [isAutoPlay]);
+
+  // Pause autoplay when reaching quiz
+  useEffect(() => {
+    if (isAutoPlay && currentPage.page_type === 'interactive_quiz') {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setIsPlaying(false);
+      setIsAutoPlay(false);
+    }
+  }, [currentPageIndex, currentPage.page_type, isAutoPlay]);
+
   const handleAudio = () => {
-    // Audio functionality would be implemented here
-    console.log('Playing audio for current page');
+    if (!audioRef.current) return;
+    
+    if (isPlaying) {
+      // Stop playing
+      if (timeUpdateRef.current) {
+        audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
+        timeUpdateRef.current = null;
+      }
+      audioRef.current.pause();
+      setIsPlaying(false);
+      return;
+    }
+    
+    // Manual play (not auto-advance)
+    playCurrentPageAudio(false);
+  };
+
+  const toggleAutoPlay = () => {
+    if (isAutoPlay) {
+      // Turn off autoplay
+      setIsAutoPlay(false);
+      if (audioRef.current) {
+        if (timeUpdateRef.current) {
+          audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
+          timeUpdateRef.current = null;
+        }
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    } else {
+      // Turn on autoplay - start playing current page immediately
+      setIsAutoPlay(true);
+      // Use setTimeout to ensure state is updated before playing
+      setTimeout(() => {
+        playCurrentPageAudio(true);
+      }, 100);
+    }
   };
 
   const handleAnswerSelect = (answer: string) => {
@@ -273,7 +482,7 @@ const PageContainer: React.FC = () => {
                         
                         {/* Cover Image - fixed height */}
                         <div className="h-3/5 flex-none flex flex-col my-2">
-                          <div className="w-full h-full relative flex items-center justify-center bg-orange-50/30 rounded-2xl overflow-hidden">
+                          <div className="w-full h-full relative flex items-center justify-center  rounded-2xl overflow-hidden">
                             {imageErrors.has(currentPage.images[0]) ? (
                               <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
                             ) : (
@@ -318,7 +527,7 @@ const PageContainer: React.FC = () => {
                         
                         {/* Dedication Image */}
                         <div className="h-1/2 flex-none flex flex-col my-2">
-                          <div className="w-full h-full relative flex items-center justify-center bg-orange-50/30 rounded-2xl overflow-hidden">
+                          <div className="w-full h-full relative flex items-center justify-center  rounded-2xl overflow-hidden">
                             {imageErrors.has(currentPage.images[0]) ? (
                               <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
                             ) : (
@@ -370,7 +579,7 @@ const PageContainer: React.FC = () => {
                         
                         {/* Image in middle */}
                         <div className="h-1/3 flex-none flex flex-col gap-2 my-2">
-                          <div className="w-full h-full relative flex items-center justify-center bg-orange-50/30 rounded-2xl overflow-hidden">
+                          <div className="w-full h-full relative flex items-center justify-center  rounded-2xl overflow-hidden">
                             {imageErrors.has(currentPage.images[0]) ? (
                               <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
                             ) : (
@@ -446,7 +655,7 @@ const PageContainer: React.FC = () => {
                       {/* Image Section - Larger for simple pages */}
                       <div className={`${isSimplePage ? 'h-2/3' : 'h-2/5'} flex-none flex flex-col gap-2 my-2`}>
                         {currentPage.images.length === 1 ? (
-                          <div className="w-full h-full relative flex items-center justify-center bg-orange-50/30 rounded-2xl overflow-hidden">
+                          <div className="w-full h-full relative flex items-center justify-center  rounded-2xl overflow-hidden">
                             {imageErrors.has(currentPage.images[0]) ? (
                               <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
                             ) : (
@@ -460,7 +669,7 @@ const PageContainer: React.FC = () => {
                           </div>
                         ) : currentPage.images.length === 2 ? (
                           <>
-                            <div className="h-1/2 w-full relative flex items-center justify-center bg-orange-50/30 rounded-2xl overflow-hidden">
+                            <div className="h-1/2 w-full relative flex items-center justify-center  rounded-2xl overflow-hidden">
                               {imageErrors.has(currentPage.images[0]) ? (
                                 <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
                               ) : (
@@ -472,7 +681,7 @@ const PageContainer: React.FC = () => {
                                 />
                               )}
                             </div>
-                            <div className="h-1/2 w-full relative flex items-center justify-center bg-orange-50/30 rounded-2xl overflow-hidden">
+                            <div className="h-1/2 w-full relative flex items-center justify-center  rounded-2xl overflow-hidden">
                               {imageErrors.has(currentPage.images[1]) ? (
                                 <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
                               ) : (
@@ -489,7 +698,7 @@ const PageContainer: React.FC = () => {
                           /* Three Images */
                           <>
                             <div className="h-1/2 w-full flex gap-2">
-                              <div className="flex-1 relative bg-orange-50/30 rounded-2xl overflow-hidden">
+                              <div className="flex-1 relative  rounded-2xl overflow-hidden">
                                 {imageErrors.has(currentPage.images[0]) ? (
                                   <div className="text-4xl flex items-center justify-center h-full w-full">🌻</div>
                                 ) : (
@@ -501,7 +710,7 @@ const PageContainer: React.FC = () => {
                                   />
                                 )}
                               </div>
-                              <div className="flex-1 relative bg-orange-50/30 rounded-2xl overflow-hidden">
+                              <div className="flex-1 relative  rounded-2xl overflow-hidden">
                                 {imageErrors.has(currentPage.images[1]) ? (
                                   <div className="text-4xl flex items-center justify-center h-full w-full">🌻</div>
                                 ) : (
@@ -514,7 +723,7 @@ const PageContainer: React.FC = () => {
                                 )}
                               </div>
                             </div>
-                            <div className="h-1/2 w-full relative flex items-center justify-center bg-orange-50/30 rounded-2xl overflow-hidden">
+                            <div className="h-1/2 w-full relative flex items-center justify-center  rounded-2xl overflow-hidden">
                               {imageErrors.has(currentPage.images[2]) ? (
                                 <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
                               ) : (
@@ -548,7 +757,7 @@ const PageContainer: React.FC = () => {
           <Card className="w-full max-w-6xl h-full bg-white/95 backdrop-blur shadow-2xl rounded-3xl overflow-hidden border-none ring-1 ring-black/5 flex flex-col md:flex-row">
             
             {/* Image Section */}
-            <div className="w-full md:w-1/2 h-64 md:h-full bg-orange-50/30 flex flex-col gap-1 relative flex-none">
+            <div className="w-full md:w-1/2 h-64 md:h-full  flex flex-col gap-1 relative flex-none">
               {currentPage.images.length === 1 ? (
                 /* Single Image Layout */
                 <div className="w-full h-full relative flex items-center justify-center bg-white/50 overflow-hidden">
@@ -722,47 +931,110 @@ const PageContainer: React.FC = () => {
         </div>
       </div>
 
+      {/* Hidden Audio Element */}
+      <audio
+        ref={audioRef}
+        src="/audio/story-audio.wav"
+        preload="auto"
+      />
+
       {/* Navigation Controls */}
       <div className="flex-none bg-white shadow-lg p-4 z-10">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={handlePrevious}
-            disabled={currentPageIndex === 0}
-            className="flex-none flex items-center justify-center gap-2 px-4 md:px-6 py-3 text-base md:text-lg font-medium rounded-xl border-2 border-red-300 hover:bg-red-50 disabled:opacity-50"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            <span className="hidden md:inline">Previous</span>
-            <span className="md:hidden">Prev</span>
-          </Button>
+        <div className="max-w-4xl mx-auto flex flex-col gap-3">
+          {/* Main Navigation Row */}
+          <div className="flex items-center justify-between gap-2 md:gap-4">
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={handlePrevious}
+              disabled={currentPageIndex === 0 || isAutoPlay}
+              className="flex-none flex items-center justify-center gap-1 md:gap-2 px-3 md:px-6 py-3 text-base md:text-lg font-medium rounded-xl border-2 border-red-300 hover:bg-red-50 disabled:opacity-50"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              <span className="hidden md:inline">Previous</span>
+              <span className="md:hidden">Prev</span>
+            </Button>
 
-          <div className="flex-1 flex flex-col items-center justify-center gap-2 min-w-0">
-            <div className="w-full max-w-md flex flex-col gap-1">
-              <div className="flex justify-between text-xs text-gray-500 px-1">
-                <span>{currentPageIndex + 1}/{totalPages}</span>
-                <span>{Math.round(progressPercentage)}%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div 
-                  className="bg-red-400 h-2 rounded-full transition-all duration-300"
-                  style={{ width: `${progressPercentage}%` }}
-                ></div>
-              </div>
+            {/* Audio Controls - Center */}
+            <div className="flex items-center gap-2">
+              {/* Auto Play Toggle */}
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={toggleAutoPlay}
+                className={`flex-none flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-3 text-base md:text-lg font-medium rounded-xl border-2 transition-all duration-200 ${
+                  isAutoPlay
+                    ? 'bg-purple-500 text-white border-purple-500 hover:bg-purple-600'
+                    : 'bg-white text-purple-600 border-purple-300 hover:bg-purple-50'
+                }`}
+              >
+                {isAutoPlay ? (
+                  <>
+                    <Pause className="w-5 h-5" />
+                    <span className="hidden md:inline">Auto</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-5 h-5" />
+                    <span className="hidden md:inline">Auto</span>
+                  </>
+                )}
+              </Button>
+
+              {/* Manual Listen Button */}
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={handleAudio}
+                disabled={isAutoPlay}
+                className={`flex-none flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-3 text-base md:text-lg font-medium rounded-xl border-2 transition-all duration-200 ${
+                  isPlaying && !isAutoPlay
+                    ? 'bg-green-500 text-white border-green-500 hover:bg-green-600'
+                    : isAutoPlay
+                    ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                    : 'bg-white text-green-600 border-green-300 hover:bg-green-50'
+                }`}
+              >
+                {isPlaying && !isAutoPlay ? (
+                  <>
+                    <Square className="w-5 h-5" />
+                    <span className="hidden md:inline">Stop</span>
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="w-5 h-5" />
+                    <span>Listen</span>
+                  </>
+                )}
+              </Button>
             </div>
+
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={handleNext}
+              disabled={currentPageIndex === totalPages - 1 || (currentPage.page_type === 'interactive_quiz' && !quizCompleted) || isAutoPlay}
+              className="flex-none flex items-center justify-center gap-1 md:gap-2 px-3 md:px-6 py-3 text-base md:text-lg font-medium rounded-xl border-2 border-red-300 hover:bg-red-50 disabled:opacity-50"
+            >
+              <span className="hidden md:inline">Next</span>
+              <span className="md:hidden">Next</span>
+              <ChevronRight className="w-5 h-5" />
+            </Button>
           </div>
 
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={handleNext}
-            disabled={currentPageIndex === totalPages - 1 || (currentPage.page_type === 'interactive_quiz' && !quizCompleted)}
-            className="flex-none flex items-center justify-center gap-2 px-4 md:px-6 py-3 text-base md:text-lg font-medium rounded-xl border-2 border-red-300 hover:bg-red-50 disabled:opacity-50"
-          >
-            <span className="hidden md:inline">Next</span>
-            <span className="md:hidden">Next</span>
-            <ChevronRight className="w-5 h-5" />
-          </Button>
+          {/* Progress Bar Row */}
+          <div className="w-full max-w-md mx-auto flex flex-col gap-1">
+            <div className="flex justify-between text-xs text-gray-500 px-1">
+              <span>{currentPageIndex + 1}/{totalPages}</span>
+              <span>{Math.round(progressPercentage)}%</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div 
+                className="bg-red-400 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${progressPercentage}%` }}
+              ></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
