@@ -110,7 +110,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/Page 1/1.png', '/images/Page 1/2.png', '/images/Page 1/3.png'],
+      images: ['/images/page1-1.png', '/images/page1-2.png', '/images/page1-3.png'],
       text_bottom: 'Shai opened his eyes and sighed a big, sleepy sigh.\nShai: "Ugh… I\'m soooo sad. I don\'t have a new toy today."\nSuddenly, Shira appeared beside him, her face glowing with warmth.\nShira: "Good morning, Shai! You know, the best gift isn\'t a new toy."\nShai: "It\'s not? But toys are the BEST!"\nSpice flapped dramatically onto the pillow.\nSpice: "Koo-koo-ree-koo! Boker Tov, yeladim! The biggest gift is… a BAG FULL OF YUMMY WORMS!"\nShai: "EWWWW! Spice, that\'s gross!"',
       quiz_question: '',
       quiz_answers: []
@@ -118,7 +118,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/Page 2/1.png', '/images/Page 2/2.png'],
+      images: ['/images/page2-1.png', '/images/page2-2.png'],
       text_bottom: 'Shprintza: "Shai, every single morning Hashem gives us the most amazing present of all."\nShai: "Better than a LEGO spaceship with two astronauts AND a laser cannon?"\nSpice: "Better than a mountain of cornflakes with extra seeds on top?"\nShprintza: (smiling patiently) "Even better! Hashem gives you back your Neshama — your soul!"\nShai: "My Nesh-a-ma? What\'s that? Can I play with it?"\nShprintza: "Your Neshama is the spark of Hashem inside you — it\'s what makes you alive! It helps you think, feel, love, and be kind."\nShai: "Ohhh! Is THAT why I can think of silly jokes?"\nSpice: "Or FLYYYY?!" (flaps wildly and bumps into the lamp)\nShprintza: (laughing softly) "Exactly, Shai."',
       quiz_question: '',
       quiz_answers: []
@@ -126,7 +126,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/Page 3/9.png'],
+      images: ['/images/page3-1.png'],
       text_bottom: 'Shprintza: "When we sleep, our Neshama rests with Hashem. It goes up to Heaven! And when we wake up… Hashem sends it right back to us."\nShai: "Whoa! So my Neshama goes on a trip every night?"\nShprintza: "Yes! That\'s why we say Modeh Ani the very first thing when we wake up — even before we get out of bed, even before we wash our hands — to thank Hashem for giving us life again."\nSpice: "I\'m thankful for my magnificent feathers!" (poses like a supermodel)\nShai: "So I get my soul back every single morning? Even on Mondays?!"\nShprintza: "Every beautiful day, Shai. Every single one."\nSpice: "And I get… BREAKFAST! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: []
@@ -134,7 +134,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/Page 4/1.png'],
+      images: ['/images/page4-1.png'],
       text_bottom: 'Shprintza: "Let\'s celebrate being alive!"\nThey begin to sing and dance around the room:\nShprintza & Shai: "I\'m alive! I\'m alive! Hashem gave me my soul inside!"\nSpice: (spinning in circles) "I\'m aliiiive! Koo-koo-ree-koo! ¡Estoy vivo! Ani chai! Koo-koo-ree-koo!"\nShai: (jumping on the bed) "This is better than toys!"',
       quiz_question: '',
       quiz_answers: []
@@ -142,7 +142,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/Page 5/1.png'],
+      images: ['/images/page5-1.png'],
       text_bottom: 'Shai: "Shprintza, did everyone always say Modeh Ani when they woke up?"\nShprintza: (sitting down beside him) "That\'s a wonderful question! Let me tell you about King David. Long, long ago, King David kept a beautiful harp beside his bed."\nShai: "A harp? In his BEDROOM?"\nShprintza: "Yes! Every morning at midnight, a gentle breeze from the North would blow through his window and make the harp sing — ting-tong-ting!"\nSpice: (strumming air guitar) "Like a rockstar! Koo-koo-ree-koo!"\nShprintza: "King David would wake up and immediately sing thanks to Hashem for his life — for his red hair, his eyes, his ability to play music… even his toes!"\nShai: (wiggling his toes) "Even toes? That\'s silly!"\nShprintza: "King David knew that every part of him was a gift. That\'s what Modeh Ani teaches us — to be grateful for everything, big and small."',
       quiz_question: '',
       quiz_answers: []
@@ -150,7 +150,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/Page 6/1.png', '/images/Page 6/3.png', '/images/Page 6/8.png'],
+      images: ['/images/page6-1.png', '/images/page6-2.png', '/images/page6-3.png'],
       text_bottom: 'The next morning, Shai woke up looking for his favorite toy car.\nShai: "Where is it? Where\'s my red race car? I NEED IT!"\nHe looked under the bed. Not there. He looked in his toy box. Not there either!\nShai:  Oy vey! "This is the WORST day ever”!\nSpice: (landing on his shoulder) "Shai! Shai! Remember what we learned?"\nShai: "But Spice… I really wanted to play with it!"\nShprintza: (kneeling down gently) "I know you\'re disappointed, Shai. But let\'s think — what gift do you have right now, even without your toy car?"\nShai paused. He touched his chest where his Neshama was.\nShai: (taking a deep breath) "My Neshama! Modeh Ani... thank You, Hashem, for giving me back my soul. Thank You for my eyes to look for toys, my hands to play, my family who loves me, and... and even for Spice, even when he\'s being silly!"\nSpice: "I\'m not silly — I\'m Koo-koo-ree-koo!"\nJust then, Shai’s little sister walked in, pushing the red race car.\nShai: "There it is! She had it the whole time!"\nShprintza: (smiling warmly) "See? When we start with gratitude, everything feels better."',
       quiz_question: '',
       quiz_answers: []
@@ -192,7 +192,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '🌟 Modeh Ani 🌟',
-      images: ['/images/RESIZE 3_4 - Page 8 .jpg'],
+      images: ['/images/page8-1.png'],
       text_bottom: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה רַבָּה אֱמוּנָתֶךָ\n\nModeh Ani lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha.\n\nMeaning: Thank You, Hashem, for returning my soul to me with kindness. How great is Your faithfulness!',
       quiz_question: '',
       quiz_answers: []
@@ -200,7 +200,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: 'Giggle Page',
-      images: ['/images/RESIZE 3_4 - page 9 .jpg'],
+      images: ['/images/giggle-page.png'],
       text_bottom: 'Shai: "Shprintza… does my soul come wrapped like a Chanukah present with a bow?"\nSpice: "Of course! In bubble wrap — pop! pop! pop! Amen!"\nShprintza: (giggling) "Modeh Ani means \'I thank You.\'"\nSpice: "Ohhh… I thought it meant \'More Deli, honey!\'"\nShai: "Or \'More Silly Money!\'"\nSpice: "Or \'Moody Bunny!\'"\nEveryone bursts out laughing and tumbles onto the pillows.\nShprintza: (still giggling) "You two are impossible!"',
       quiz_question: '',
       quiz_answers: []
@@ -208,7 +208,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '🌟 Spice\'s Song 🌟',
-      images: ['/images/RESIZE 3_4 - page 10 .jpg'],
+      images: ['/images/song-page.png'],
       text_bottom: 'Spice: (clearing his throat dramatically, standing on the bedpost) TTTO You’re my sunshine\n"Every morning when I\'m still sleeping, I open up my eyes and say, Thank You, Hashem, for my Neshama, And for giving me another day!"\nThen VERY loudly and proudly: continue w Same tune\n"Modeh Ani Lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha!"\nShprintza: (clapping) "Beautiful, Spice! You remembered every word!"\nShai: "You sound even better than a real rooster!"\nSpice: (puffing up his chest) "I\'m not just any chicken — I\'m a THANKFUL chicken! A GRATEFUL chicken! A—"\nShai & Shprintza: "We know, Spice!"\nSpice: "KOO-KOO-REE-KOOOOO!!!"',
       quiz_question: '',
       quiz_answers: []
