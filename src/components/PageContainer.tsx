@@ -93,32 +93,32 @@ const PageContainer: React.FC = () => {
   const pages: Page[] = [
     {
       page_type: 'cover',
-      text_top: 'Shprintza \'n Spice: Modeh Ani Song',
+      text_top: 'Shira n\' Spice: The "Modeh Ani" Song\n\nA Jewish bedtime story of gratitude and prayer for little souls\n\nBy: Rabbi Yossi Srugo - Miami Mohel',
       images: ['/images/RESIZE 3_4 - Front Cover.jpg'],
-      text_bottom: 'Written by Rabbi Yossi Srugo',
+      text_bottom: 'Join patient Shira, silly Shai and spectacular Spice-the KooKoo chicken, as they discover that the greatest gift we receive, it\'s the gift of life itself, given to us by God- Hashem, fresh every single morning!',
       quiz_question: '',
       quiz_answers: []
     },
     {
       page_type: 'dedication',
-      text_top: 'Dedicated to all the children I\'ve had the privilege of welcoming into the world — performing their Brit Milah, the sacred moment when their Neshama first enters their body. — Rabbi Yossi Srugo',
-      images: ['/images/RESIZE 3_4 - Dedication page.jpg'],
-      text_bottom: 'Happy Reading!',
+      text_top: 'Dedicated to the thousands of precious souls I\'ve had the privilege to perform their Brit Milah— at the holy instant when heaven touches earth, and a new Neshama, soul, shines into this world.\nMay I merit that all those Neshamas shine always, as the stars shine in the heavens.\n— Rabbi Yossi Srugo- Miami Mohel',
+      images: ['/images/rabbi.png'],
+      text_bottom: 'Special thanks to the amazing Collins family -Michael, Tiferet and their 2 cute boys Chaim Mordechai and Baby Adam Yehuda, whom I\'ve had the privilege and honor to do their Bris.\nThank you! Because of you, thousands of children will learn to pray to G-d and be thankful!\nMay this publication bring Hashem\'s blessing to you, spiritually, physically and in great abundance!',
       quiz_question: '',
       quiz_answers: []
     },
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/page_1_1_top Left.jpg', '/images/page_1_2_top_Right.jpg', '/images/RESIZE 3_2 - page 1.3  bottom.jpg'],
-      text_bottom: 'Shai opened his eyes and sighed a big, sleepy sigh.\nShai: "Ugh… I\'m soooo sad. I don\'t have a new toy today."\nSuddenly, Shprintza appeared beside him, her face glowing with warmth.\nShprintza: "Good morning, Shai! You know, your biggest gift isn\'t a new toy."\nShai: "It\'s not? But toys are the BEST!"\nSpice flapped dramatically onto the pillow.\nSpice: "Koo-koo-ree-koo! Boker Tov, yeladim! The biggest gift is… a BAG FULL OF YUMMY WORMS!"\nShai: "EWWWW! Spice, that\'s gross!"',
+      images: ['/images/Page 1/1.png', '/images/Page 1/2.png', '/images/Page 1/3.png'],
+      text_bottom: 'Shai opened his eyes and sighed a big, sleepy sigh.\nShai: "Ugh… I\'m soooo sad. I don\'t have a new toy today."\nSuddenly, Shira appeared beside him, her face glowing with warmth.\nShira: "Good morning, Shai! You know, the best gift isn\'t a new toy."\nShai: "It\'s not? But toys are the BEST!"\nSpice flapped dramatically onto the pillow.\nSpice: "Koo-koo-ree-koo! Boker Tov, yeladim! The biggest gift is… a BAG FULL OF YUMMY WORMS!"\nShai: "EWWWW! Spice, that\'s gross!"',
       quiz_question: '',
       quiz_answers: []
     },
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/RESIZE 3_2 - page 2.1 top.jpg', '/images/RESIZE 3_2 - page 2.2 bottom.jpg'],
+      images: ['/images/Page 2/1.png', '/images/Page 2/2.png'],
       text_bottom: 'Shprintza: "Shai, every single morning Hashem gives us the most amazing present of all."\nShai: "Better than a LEGO spaceship with two astronauts AND a laser cannon?"\nSpice: "Better than a mountain of cornflakes with extra seeds on top?"\nShprintza: (smiling patiently) "Even better! Hashem gives you back your Neshama — your soul!"\nShai: "My Nesh-a-ma? What\'s that? Can I play with it?"\nShprintza: "Your Neshama is the spark of Hashem inside you — it\'s what makes you alive! It helps you think, feel, love, and be kind."\nShai: "Ohhh! Is THAT why I can think of silly jokes?"\nSpice: "Or FLYYYY?!" (flaps wildly and bumps into the lamp)\nShprintza: (laughing softly) "Exactly, Shai."',
       quiz_question: '',
       quiz_answers: []
@@ -126,7 +126,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/RESIZE 3_4 - page 3.jpg'],
+      images: ['/images/Page 3/9.png'],
       text_bottom: 'Shprintza: "When we sleep, our Neshama rests with Hashem. It goes up to Heaven! And when we wake up… Hashem sends it right back to us."\nShai: "Whoa! So my Neshama goes on a trip every night?"\nShprintza: "Yes! That\'s why we say Modeh Ani the very first thing when we wake up — even before we get out of bed, even before we wash our hands — to thank Hashem for giving us life again."\nSpice: "I\'m thankful for my magnificent feathers!" (poses like a supermodel)\nShai: "So I get my soul back every single morning? Even on Mondays?!"\nShprintza: "Every beautiful day, Shai. Every single one."\nSpice: "And I get… BREAKFAST! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: []
@@ -134,7 +134,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/RESIZE 3_4 - page 4 .jpg'],
+      images: ['/images/Page 4/1.png'],
       text_bottom: 'Shprintza: "Let\'s celebrate being alive!"\nThey begin to sing and dance around the room:\nShprintza & Shai: "I\'m alive! I\'m alive! Hashem gave me my soul inside!"\nSpice: (spinning in circles) "I\'m aliiiive! Koo-koo-ree-koo! ¡Estoy vivo! Ani chai! Koo-koo-ree-koo!"\nShai: (jumping on the bed) "This is better than toys!"',
       quiz_question: '',
       quiz_answers: []
@@ -142,7 +142,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/RESIZE 3_4  - page 5.jpg'],
+      images: ['/images/Page 5/1.png'],
       text_bottom: 'Shai: "Shprintza, did everyone always say Modeh Ani when they woke up?"\nShprintza: (sitting down beside him) "That\'s a wonderful question! Let me tell you about King David. Long, long ago, King David kept a beautiful harp beside his bed."\nShai: "A harp? In his BEDROOM?"\nShprintza: "Yes! Every morning at midnight, a gentle breeze from the North would blow through his window and make the harp sing — ting-tong-ting!"\nSpice: (strumming air guitar) "Like a rockstar! Koo-koo-ree-koo!"\nShprintza: "King David would wake up and immediately sing thanks to Hashem for his life — for his red hair, his eyes, his ability to play music… even his toes!"\nShai: (wiggling his toes) "Even toes? That\'s silly!"\nShprintza: "King David knew that every part of him was a gift. That\'s what Modeh Ani teaches us — to be grateful for everything, big and small."',
       quiz_question: '',
       quiz_answers: []
@@ -150,7 +150,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/RESIZE 1_1 - page 6.2.jpg', '/images/RESIZE 1_1 - page 6.1.jpg', '/images/RESIZE 3_2 - page 6.3 .jpg'],
+      images: ['/images/Page 6/1.png', '/images/Page 6/3.png', '/images/Page 6/8.png'],
       text_bottom: 'The next morning, Shai woke up looking for his favorite toy car.\nShai: "Where is it? Where\'s my red race car? I NEED IT!"\nHe looked under the bed. Not there. He looked in his toy box. Not there either!\nShai:  Oy vey! "This is the WORST day ever”!\nSpice: (landing on his shoulder) "Shai! Shai! Remember what we learned?"\nShai: "But Spice… I really wanted to play with it!"\nShprintza: (kneeling down gently) "I know you\'re disappointed, Shai. But let\'s think — what gift do you have right now, even without your toy car?"\nShai paused. He touched his chest where his Neshama was.\nShai: (taking a deep breath) "My Neshama! Modeh Ani... thank You, Hashem, for giving me back my soul. Thank You for my eyes to look for toys, my hands to play, my family who loves me, and... and even for Spice, even when he\'s being silly!"\nSpice: "I\'m not silly — I\'m Koo-koo-ree-koo!"\nJust then, Shai’s little sister walked in, pushing the red race car.\nShai: "There it is! She had it the whole time!"\nShprintza: (smiling warmly) "See? When we start with gratitude, everything feels better."',
       quiz_question: '',
       quiz_answers: []
@@ -217,7 +217,7 @@ const PageContainer: React.FC = () => {
       page_type: 'back_cover',
       text_top: 'The End',
       images: ['/images/RESIZE 3_4 - back cover.jpg'],
-      text_bottom: 'A joyful bedtime and morning story that teaches gratitude, laughter, and one of the most important prayers every Jewish child learns — Modeh Ani.\nJoin silly Shai, patient Shprintza, and spectacular Spice the chicken as they discover that the greatest gift we receive isn\'t a toy or a treat — it\'s the gift of life itself, given to us by God, fresh every single morning!',
+      text_bottom: 'A joyful bedtime and morning story that teaches gratitude, laughter, and one of the most important prayers every Jewish child learns — Modeh Ani.',
       quiz_question: '',
       quiz_answers: []
     }
