@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+
+interface QuizQuestion {
+  question: string;
+  imageUrl: string;
+  answers: string[];
+  correctAnswerIndex?: number;
+}
 
 interface QuizPageLayoutProps {
   question?: string;
   imageUrl?: string;
   answers?: string[];
+  questions?: QuizQuestion[];
   currentPage?: number;
   totalPages?: number;
   onPrevious?: () => void;
@@ -13,27 +21,57 @@ interface QuizPageLayoutProps {
   onAudio?: () => void;
   onAnswerSelect?: (answerIndex: number) => void;
   selectedAnswer?: number | null;
+  onQuizComplete?: () => void;
 }
 
 const QuizPageLayout: React.FC<QuizPageLayoutProps> = ({
   question = "What color is the friendly dragon in our story?",
   imageUrl = "https://example.com/placeholder.jpg",
   answers = ["Red like a fire truck", "Blue like the ocean", "Green like grass", "Purple like grapes"],
+  questions,
   currentPage = 1,
   totalPages = 17,
   onPrevious = () => {},
   onNext = () => {},
   onAudio = () => {},
   onAnswerSelect = () => {},
-  selectedAnswer = null
+  selectedAnswer = null,
+  onQuizComplete = () => {}
 }) => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
+  
+  // Use questions array if provided, otherwise fall back to single question props
+  const quizQuestions: QuizQuestion[] = questions || [
+    { question, imageUrl, answers }
+  ];
+  
+  const currentQuestion = quizQuestions[currentQuestionIndex];
+  const totalQuestions = quizQuestions.length;
+  const isLastQuestion = currentQuestionIndex === totalQuestions - 1;
+  
   const progress = ((currentPage || 1) / (totalPages || 17)) * 100;
-  const safeAnswers = answers || [];
+  const safeAnswers = currentQuestion.answers || [];
 
   const handleAnswerClick = (index: number) => {
     if (onAnswerSelect) {
       onAnswerSelect(index);
     }
+    
+    // Mark question as answered
+    if (!answeredQuestions.includes(currentQuestionIndex)) {
+      setAnsweredQuestions([...answeredQuestions, currentQuestionIndex]);
+    }
+    
+    // Move to next question after a short delay, or complete quiz
+    setTimeout(() => {
+      if (!isLastQuestion) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        onQuizComplete();
+        onNext();
+      }
+    }, 800);
   };
 
   const answerColors = [
@@ -53,7 +91,7 @@ const QuizPageLayout: React.FC<QuizPageLayoutProps> = ({
               Page {currentPage} of {totalPages}
             </span>
             <span className="text-sm font-medium text-gray-600">
-              {Math.round(progress)}% Complete
+              Question {currentQuestionIndex + 1} of {totalQuestions}
             </span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
@@ -61,6 +99,21 @@ const QuizPageLayout: React.FC<QuizPageLayoutProps> = ({
               className="bg-gradient-to-r from-red-400 to-pink-400 h-3 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             ></div>
+          </div>
+          {/* Question progress dots */}
+          <div className="flex justify-center gap-2 mt-3">
+            {quizQuestions.map((_, idx) => (
+              <div 
+                key={idx}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  idx === currentQuestionIndex 
+                    ? 'bg-yellow-500 scale-125' 
+                    : answeredQuestions.includes(idx)
+                      ? 'bg-green-500'
+                      : 'bg-gray-300'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -73,7 +126,7 @@ const QuizPageLayout: React.FC<QuizPageLayoutProps> = ({
           <Card className="bg-white shadow-lg border-4 border-yellow-300">
             <CardContent className="p-8">
               <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 leading-relaxed">
-                {question}
+                {currentQuestion.question}
               </h2>
             </CardContent>
           </Card>
@@ -82,9 +135,9 @@ const QuizPageLayout: React.FC<QuizPageLayoutProps> = ({
           <div className="flex justify-center">
             <div className="relative">
               <img 
-                src={imageUrl}
+                src={currentQuestion.imageUrl}
                 alt="Story illustration"
-                className="w-80 h-80 object-cover rounded-2xl shadow-xl border-4 border-white"
+                className="w-80 h-80 object-cover rounded-2xl shadow-xl border-4 border-white transition-all duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
             </div>

@@ -37,6 +37,7 @@ interface Question {
   question: string;
   answers: string[];
   correctAnswer: string;
+  imageUrl?: string;
 }
 
 interface Page {
@@ -57,12 +58,14 @@ const PageContainer: React.FC = () => {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
   const [isPlaying, setIsPlaying] = useState(false);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
+  const [currentQuizImage, setCurrentQuizImage] = useState<string>('');
   
   const audioRef = useRef<HTMLAudioElement>(null);
   const timeUpdateRef = useRef<((e: Event) => void) | null>(null);
   const currentPageIndexRef = useRef(currentPageIndex);
   const isAutoPlayRef = useRef(isAutoPlay);
   const quizQuestionIndexRef = useRef(quizQuestionIndex);
+  const isInitialRenderRef = useRef(true);
   
   // Keep refs in sync with state
   useEffect(() => {
@@ -147,7 +150,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/RESIZE 1_1 - page 6.2.jpg', '/images/RESIZE 1_1 - page 6.2 (2).jpg', '/images/RESIZE 3_2 - page 6.3 .jpg'],
+      images: ['/images/RESIZE 1_1 - page 6.2.jpg', '/images/RESIZE 1_1 - page 6.1.jpg', '/images/RESIZE 3_2 - page 6.3 .jpg'],
       text_bottom: 'The next morning, Shai woke up looking for his favorite toy car.\nShai: "Where is it? Where\'s my red race car? I NEED IT!"\nHe looked under the bed. Not there. He looked in his toy box. Not there either!\nShai:  Oy vey! "This is the WORST day ever”!\nSpice: (landing on his shoulder) "Shai! Shai! Remember what we learned?"\nShai: "But Spice… I really wanted to play with it!"\nShprintza: (kneeling down gently) "I know you\'re disappointed, Shai. But let\'s think — what gift do you have right now, even without your toy car?"\nShai paused. He touched his chest where his Neshama was.\nShai: (taking a deep breath) "My Neshama! Modeh Ani... thank You, Hashem, for giving me back my soul. Thank You for my eyes to look for toys, my hands to play, my family who loves me, and... and even for Spice, even when he\'s being silly!"\nSpice: "I\'m not silly — I\'m Koo-koo-ree-koo!"\nJust then, Shai’s little sister walked in, pushing the red race car.\nShai: "There it is! She had it the whole time!"\nShprintza: (smiling warmly) "See? When we start with gratitude, everything feels better."',
       quiz_question: '',
       quiz_answers: []
@@ -163,22 +166,26 @@ const PageContainer: React.FC = () => {
         {
           question: 'Why do we say Modeh Ani first thing when we wake up, even before getting out of bed?',
           answers: ['To get rid of bad breath?', 'To thank Hashem for our soul, our life, right away, before doing anything else!', 'So we can skip school?', 'To forget a bad dream?'],
-          correctAnswer: 'To thank Hashem for our soul, our life, right away, before doing anything else!'
+          correctAnswer: 'To thank Hashem for our soul, our life, right away, before doing anything else!',
+          imageUrl: '/images/RESIZE 3_2 - Quiz 1 .jpg'
         },
         {
           question: ' What is a Neshama?',
           answers: [' A flying car that goes to the moon?', 'Our soul, a spark of Hashem that helps us think, feel, love, and be kind.', 'A submarine that looks like a whale?', 'A monkey that plays the trumpet?'],
-          correctAnswer: 'Our soul, a spark of Hashem that helps us think, feel, love, and be kind.'
+          correctAnswer: 'Our soul, a spark of Hashem that helps us think, feel, love, and be kind.',
+          imageUrl: '/images/RESIZE 3_2 - Quiz 2.jpg'
         },
         {
           question: 'Where does our Neshama go when we sleep?',
           answers: ['It goes shopping for toys?', 'It visits the zoo?', 'It rests with Hashem in Heaven and returns when we wake up!', 'It stays in our shoes?'],
-          correctAnswer: 'It rests with Hashem in Heaven and returns when we wake up!'
+          correctAnswer: 'It rests with Hashem in Heaven and returns when we wake up!',
+          imageUrl: '/images/RESIZE 3_2 - Quiz 3.jpg'
         },
         {
           question: 'Why don\'t we say Hashem\'s name in Modeh Ani?',
           answers: ['Because we forgot it?', 'Because it\'s too early?', 'Because Spice is too loud?', 'Because we haven\'t washed our hands yet! We say "Melech chai v\'kayam" (Living and Eternal King) instead.'],
-          correctAnswer: 'Because we haven\'t washed our hands yet! We say "Melech chai v\'kayam" (Living and Eternal King) instead.'
+          correctAnswer: 'Because we haven\'t washed our hands yet! We say "Melech chai v\'kayam" (Living and Eternal King) instead.',
+          imageUrl: '/images/RESIZE 3_2 - Quiz 4 .jpg'
         }
       ]
     },
@@ -220,10 +227,58 @@ const PageContainer: React.FC = () => {
   const totalPages = pages.length;
   const progressPercentage = ((currentPageIndex + 1) / totalPages) * 100;
   
+  // Update quiz image when quiz question changes
+  useEffect(() => {
+    if (currentPage.page_type === 'interactive_quiz' && currentPage.questions && !quizCompleted) {
+      const newImage = currentPage.questions[quizQuestionIndex]?.imageUrl || currentPage.images[0];
+      console.log('Quiz image update - Question:', quizQuestionIndex, 'Image:', newImage);
+      setCurrentQuizImage(newImage);
+    } else {
+      setCurrentQuizImage('');
+    }
+  }, [quizQuestionIndex, currentPageIndex, quizCompleted, currentPage]);
+  
   console.log('Current page:', currentPageIndex, 'Images:', currentPage.images);
+
+  // Stop audio when page changes (covers all navigation methods)
+  useEffect(() => {
+    // Skip on initial render
+    if (isInitialRenderRef.current) {
+      isInitialRenderRef.current = false;
+      return;
+    }
+    
+    console.log('Page changed to:', currentPageIndex, '- stopping audio');
+    
+    // Stop any playing audio when navigating to a new page
+    if (audioRef.current) {
+      if (timeUpdateRef.current) {
+        audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
+        timeUpdateRef.current = null;
+      }
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
+      setIsAutoPlay(false);
+    }
+  }, [currentPageIndex]);
+
+  // Helper function to stop audio playback
+  const stopAudio = useCallback(() => {
+    if (audioRef.current) {
+      if (timeUpdateRef.current) {
+        audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
+        timeUpdateRef.current = null;
+      }
+      audioRef.current.pause();
+      setIsPlaying(false);
+      setIsAutoPlay(false);
+    }
+  }, []);
 
   const handlePrevious = () => {
     if (currentPageIndex > 0) {
+      stopAudio();
       setCurrentPageIndex(currentPageIndex - 1);
       setSelectedAnswer('');
       setQuizQuestionIndex(0);
@@ -233,6 +288,7 @@ const PageContainer: React.FC = () => {
 
   const handleNext = () => {
     if (currentPageIndex < totalPages - 1) {
+      stopAudio();
       setCurrentPageIndex(currentPageIndex + 1);
       setSelectedAnswer('');
       setQuizQuestionIndex(0);
@@ -759,18 +815,24 @@ const PageContainer: React.FC = () => {
             {/* Image Section */}
             <div className="w-full md:w-1/2 h-64 md:h-full  flex flex-col gap-1 relative flex-none">
               {currentPage.images.length === 1 ? (
-                /* Single Image Layout */
+                /* Single Image Layout - For quiz pages, show question-specific image */
                 <div className="w-full h-full relative flex items-center justify-center bg-white/50 overflow-hidden">
-                  {imageErrors.has(currentPage.images[0]) ? (
-                    <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
-                  ) : (
-                    <img 
-                      src={currentPage.images[0]} 
-                      alt="Story illustration"
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                      onError={() => setImageErrors(prev => new Set(prev).add(currentPage.images[0]))}
-                    />
-                  )}
+                  {(() => {
+                    const imageToShow = currentPage.page_type === 'interactive_quiz' && !quizCompleted && currentQuizImage
+                      ? currentQuizImage
+                      : currentPage.images[0];
+                    return imageErrors.has(imageToShow) ? (
+                      <div className="text-6xl flex items-center justify-center h-full w-full">🌻</div>
+                    ) : (
+                      <img 
+                        key={imageToShow}
+                        src={imageToShow} 
+                        alt="Story illustration"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        onError={() => setImageErrors(prev => new Set(prev).add(imageToShow))}
+                      />
+                    );
+                  })()}
                 </div>
               ) : currentPage.images.length === 2 ? (
                 /* Two Images Layout - Top and Bottom */

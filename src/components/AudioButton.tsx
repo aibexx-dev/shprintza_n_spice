@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 
 interface AudioButtonProps {
+  audioSrc?: string;
   onPlay?: () => void;
   onPause?: () => void;
   disabled?: boolean;
@@ -9,20 +10,48 @@ interface AudioButtonProps {
 }
 
 const AudioButton: React.FC<AudioButtonProps> = ({ 
+  audioSrc,
   onPlay = () => {}, 
   onPause = () => {}, 
   disabled = false, 
   className = '' 
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Stop audio and reset when audioSrc changes (page navigation)
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsPlaying(false);
+    
+    // Create new audio element for the new source
+    if (audioSrc) {
+      audioRef.current = new Audio(audioSrc);
+      audioRef.current.addEventListener('ended', () => {
+        setIsPlaying(false);
+      });
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [audioSrc]);
 
   const handleClick = () => {
-    if (disabled) return;
+    if (disabled || !audioRef.current) return;
     
     if (isPlaying) {
+      audioRef.current.pause();
       setIsPlaying(false);
       onPause();
     } else {
+      audioRef.current.play().catch(console.error);
       setIsPlaying(true);
       onPlay();
     }
