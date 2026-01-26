@@ -15,7 +15,7 @@ const pages = [
     text_bottom: 'A Fun Story for Young Readers',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n spice intro.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20intro.mp3'
   },
   {
     page_type: 'dedication',
@@ -24,7 +24,7 @@ const pages = [
     text_bottom: 'Happy reading!',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n spice intro.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20intro.mp3'
   },
   {
     page_type: 'story',
@@ -33,7 +33,7 @@ const pages = [
     text_bottom: 'The mouse loved to explore new places.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n spice p. 3.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p.%203.mp3'
   },
   {
     page_type: 'story',
@@ -42,7 +42,7 @@ const pages = [
     text_bottom: 'The flowers sparkled in the sunlight.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n spice p. 4.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p.%204.mp3'
   },
   {
     page_type: 'story',
@@ -51,7 +51,7 @@ const pages = [
     text_bottom: 'They became the best of friends.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n spice p. 5.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p.%205.mp3'
   },
   {
     page_type: 'story',
@@ -60,7 +60,7 @@ const pages = [
     text_bottom: 'There were so many wonderful things to see.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n Spice p. 6.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20Spice%20p.%206.mp3'
   },
   {
     page_type: 'story',
@@ -69,7 +69,7 @@ const pages = [
     text_bottom: 'The water was crystal clear and cool.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n Spice p. 7.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20Spice%20p.%207.mp3'
   },
   {
     page_type: 'story',
@@ -78,7 +78,7 @@ const pages = [
     text_bottom: 'The frog had many stories to tell.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n Spice p. 8.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20Spice%20p.%208.mp3'
   },
   {
     page_type: 'story',
@@ -87,7 +87,7 @@ const pages = [
     text_bottom: 'The mouse and butterfly were very excited.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n spice p9.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p9.mp3'
   },
   {
     page_type: 'quiz',
@@ -96,7 +96,7 @@ const pages = [
     text_bottom: '',
     quiz_question: 'What did the mouse find in the story?',
     quiz_answers: ['A magical garden', 'A big house', 'A toy car', 'A sandwich'],
-    audio_url: '/audio/Shira n spice q1.mp3',
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20q1.mp3',
     quiz_questions: [
       {
         question: 'What did the mouse find in the story?',
@@ -127,7 +127,7 @@ const pages = [
     text_bottom: 'They looked under rocks and behind trees.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n spice p10.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p10.mp3'
   },
   {
     page_type: 'story',
@@ -136,7 +136,7 @@ const pages = [
     text_bottom: 'It glowed with a warm, magical light.',
     quiz_question: '',
     quiz_answers: [],
-    audio_url: '/audio/Shira n spice p11.mp3'
+    audio_url: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p11.mp3'
   },
   {
     page_type: 'story',

@@ -21,6 +21,8 @@ const AudioButton: React.FC<AudioButtonProps> = ({
 
   // Stop audio and reset when audioSrc changes (page navigation)
   useEffect(() => {
+    console.log('AudioButton: audioSrc changed to:', audioSrc);
+    
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -29,10 +31,28 @@ const AudioButton: React.FC<AudioButtonProps> = ({
     
     // Create new audio element for the new source
     if (audioSrc) {
-      audioRef.current = new Audio(audioSrc);
-      audioRef.current.addEventListener('ended', () => {
+      const audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = audioSrc;
+      
+      audio.addEventListener('ended', () => {
         setIsPlaying(false);
       });
+      
+      audio.addEventListener('error', (e) => {
+        console.error('Audio error:', audio.error, e);
+        setIsPlaying(false);
+      });
+      
+      audio.addEventListener('canplaythrough', () => {
+        console.log('Audio ready to play:', audioSrc);
+      });
+      
+      audio.addEventListener('loadstart', () => {
+        console.log('Audio loading started:', audioSrc);
+      });
+      
+      audioRef.current = audio;
     }
 
     return () => {
@@ -44,6 +64,7 @@ const AudioButton: React.FC<AudioButtonProps> = ({
   }, [audioSrc]);
 
   const handleClick = () => {
+    console.log('AudioButton clicked, disabled:', disabled, 'audioRef:', audioRef.current);
     if (disabled || !audioRef.current) return;
     
     if (isPlaying) {
@@ -51,7 +72,14 @@ const AudioButton: React.FC<AudioButtonProps> = ({
       setIsPlaying(false);
       onPause();
     } else {
-      audioRef.current.play().catch(console.error);
+      console.log('Attempting to play audio...');
+      audioRef.current.play()
+        .then(() => {
+          console.log('Audio playing successfully');
+        })
+        .catch((err) => {
+          console.error('Play error:', err);
+        });
       setIsPlaying(true);
       onPlay();
     }

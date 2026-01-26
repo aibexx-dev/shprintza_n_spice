@@ -3,34 +3,38 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ChevronLeft, ChevronRight, Volume2, Square, Play, Pause } from 'lucide-react';
 
-// Audio timestamps for each page (in seconds)
-const PAGE_AUDIO_TIMESTAMPS: { [key: number]: { start: number; end: number } } = {
-  0: { start: 4, end: 12 },       // cover
-  1: { start: 13, end: 32 },      // dedication
-  2: { start: 33, end: 84 },      // page 1 (1:24 = 84s)
-  3: { start: 86, end: 160 },     // page 2 (1:26-2:40)
-  4: { start: 160, end: 222 },    // page 3 (2:40-3:42)
-  5: { start: 223, end: 258 },    // page 4 (3:43-4:18)
-  6: { start: 261, end: 336 },    // page 5 (4:21-5:36)
-  7: { start: 337, end: 433 },    // page 6 (5:37-7:13)
-  8: { start: 435, end: 462 },    // page 7 (7:15-7:42)
-  9: { start: 463, end: 483 },    // quiz question 1 (7:43-8:03)
-  10: { start: 484, end: 501 },   // quiz question 2 (8:04-8:21) - note: handled via quiz index
-  11: { start: 501, end: 521 },   // quiz question 3 (8:21-8:41)
-  12: { start: 521, end: 533 },   // quiz question 4 (8:41-8:53)
-  // After quiz pages:
-  13: { start: 534, end: 563 },   // page 8 (8:54-9:23) - Modeh Ani
-  14: { start: 563, end: 604 },   // page 9 (9:23-10:04) - Giggle Page
-  15: { start: 606, end: 677 },   // page 10 (10:06-11:17) - Spice's Song
-  16: { start: 678, end: 720 },   // page 11/end (11:18-end) - back cover
+// Audio URLs for each page
+const PAGE_AUDIO_URLS: { [key: number]: string } = {
+  0: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20intro.mp3', // cover
+  1: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20intro.mp3', // dedication
+  2: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p.%203.mp3', // page 3
+  3: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p.%204.mp3', // page 4
+  4: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p.%205.mp3', // page 5
+  5: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20Spice%20p.%206.mp3', // page 6
+  6: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20Spice%20p.%207.mp3', // page 7
+  7: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20Spice%20p.%208.mp3', // page 8
+  8: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p9.mp3', // page 9
+  // Quiz page uses quiz-specific audio
+  10: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p10.mp3', // page 10
+  11: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20p11.mp3', // page 11
 };
 
-// Quiz-specific timestamps (when on interactive_quiz page)
-const QUIZ_QUESTION_TIMESTAMPS: { [key: number]: { start: number; end: number } } = {
-  0: { start: 463, end: 483 },    // question 1 (7:43-8:03)
-  1: { start: 484, end: 501 },    // question 2 (8:04-8:21)
-  2: { start: 501, end: 521 },    // question 3 (8:21-8:41)
-  3: { start: 521, end: 533 },    // question 4 (8:41-8:53)
+// Start times for pages that don't start from the beginning (in seconds)
+const PAGE_AUDIO_START_TIMES: { [key: number]: number } = {
+  1: 17, // dedication page starts at 17 seconds into intro audio
+};
+
+// End times for pages that should stop before the audio ends (in seconds)
+const PAGE_AUDIO_END_TIMES: { [key: number]: number } = {
+  0: 17, // cover page stops at 17 seconds
+};
+
+// Quiz-specific audio URLs
+const QUIZ_AUDIO_URLS: { [key: number]: string } = {
+  0: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20q1.mp3',
+  1: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20q2.mp3',
+  2: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20q3.mp3',
+  3: 'https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/new_audio/Shira%20n%20spice%20q4.mp3',
 };
 
 interface Question {
@@ -60,12 +64,27 @@ const PageContainer: React.FC = () => {
   const [isAutoPlay, setIsAutoPlay] = useState(false);
   const [currentQuizImage, setCurrentQuizImage] = useState<string>('');
   
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const timeUpdateRef = useRef<((e: Event) => void) | null>(null);
   const currentPageIndexRef = useRef(currentPageIndex);
   const isAutoPlayRef = useRef(isAutoPlay);
   const quizQuestionIndexRef = useRef(quizQuestionIndex);
   const isInitialRenderRef = useRef(true);
+  
+  // Create audio element on mount
+  useEffect(() => {
+    const audio = new Audio();
+    audio.volume = 1.0;
+    audio.preload = 'auto';
+    audioRef.current = audio;
+    
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
   
   // Keep refs in sync with state
   useEffect(() => {
@@ -82,13 +101,6 @@ const PageContainer: React.FC = () => {
   
   // Toggle this to switch between layouts: true = vertical (text-image-text), false = side-by-side (image | text)
   const useVerticalLayout = false;
-  
-  // Set volume to max on mount
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 1.0;
-    }
-  }, []);
 
   const pages: Page[] = [
     {
@@ -119,7 +131,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '',
       images: ['/images/page2-1.png', '/images/page2-2.png'],
-      text_bottom: 'Shprintza: "Shai, every single morning Hashem gives us the most amazing present of all."\nShai: "Better than a LEGO spaceship with two astronauts AND a laser cannon?"\nSpice: "Better than a mountain of cornflakes with extra seeds on top?"\nShprintza: (smiling patiently) "Even better! Hashem gives you back your Neshama — your soul!"\nShai: "My Nesh-a-ma? What\'s that? Can I play with it?"\nShprintza: "Your Neshama is the spark of Hashem inside you — it\'s what makes you alive! It helps you think, feel, love, and be kind."\nShai: "Ohhh! Is THAT why I can think of silly jokes?"\nSpice: "Or FLYYYY?!" (flaps wildly and bumps into the lamp)\nShprintza: (laughing softly) "Exactly, Shai."',
+      text_bottom: 'Shira: "Shai, every single morning Hashem gives us the most amazing present of all."\nShai: "Better than a LEGO spaceship with two astronauts AND a laser cannon?"\nSpice: "Better than a mountain of cornflakes with extra seeds on top?"\nShira: (smiling patiently) "Even better! Hashem gives you back your Neshama — your soul!"\nShai: "My Nesh-a-ma? What\'s that? Can I play with it?"\nShira: "Your Neshama is the spark of Hashem inside you — it\'s what makes you alive! It helps you think, feel, love, and be kind."\nShai: "Ohhh! Is THAT why I can think of silly jokes?"\nSpice: "Or FLYYYY?!" (flaps wildly and bumps into the lamp)\nShira: (laughing softly) "Exactly, Shai."',
       quiz_question: '',
       quiz_answers: []
     },
@@ -127,7 +139,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '',
       images: ['/images/page3-1.png'],
-      text_bottom: 'Shprintza: "When we sleep, our Neshama rests with Hashem. It goes up to Heaven! And when we wake up… Hashem sends it right back to us."\nShai: "Whoa! So my Neshama goes on a trip every night?"\nShprintza: "Yes! That\'s why we say Modeh Ani the very first thing when we wake up — even before we get out of bed, even before we wash our hands — to thank Hashem for giving us life again."\nSpice: "I\'m thankful for my magnificent feathers!" (poses like a supermodel)\nShai: "So I get my soul back every single morning? Even on Mondays?!"\nShprintza: "Every beautiful day, Shai. Every single one."\nSpice: "And I get… BREAKFAST! Koo-koo-ree-koo!"',
+      text_bottom: 'Shira: "When we sleep, our Neshama rests with Hashem. It goes up to Heaven! And when we wake up… Hashem sends it right back to us."\nShai: "Whoa! So my Neshama goes on a trip every night?"\nShira: "Yes! That\'s why we say Modeh Ani the very first thing when we wake up — even before we get out of bed, even before we wash our hands — to thank Hashem for giving us life again."\nSpice: "I\'m thankful for my magnificent feathers!" (poses like a supermodel)\nShai: "So I get my soul back every single morning? Even on Mondays?!"\nShira: "Every beautiful day, Shai. Every single one."\nSpice: "And I get… BREAKFAST! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: []
     },
@@ -135,7 +147,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '',
       images: ['/images/page4-1.png'],
-      text_bottom: 'Shprintza: "Let\'s celebrate being alive!"\nThey begin to sing and dance around the room:\nShprintza & Shai: "I\'m alive! I\'m alive! Hashem gave me my soul inside!"\nSpice: (spinning in circles) "I\'m aliiiive! Koo-koo-ree-koo! ¡Estoy vivo! Ani chai! Koo-koo-ree-koo!"\nShai: (jumping on the bed) "This is better than toys!"',
+      text_bottom: 'Shira: "Let\'s celebrate being alive!"\nThey begin to sing and dance around the room:\nShira & Shai: "I\'m alive! I\'m alive! Hashem gave me my soul inside!"\nSpice: (spinning in circles) "I\'m aliiiive! Koo-koo-ree-koo! ¡Estoy vivo! Ani chai! Koo-koo-ree-koo!"\nShai: (jumping on the bed) "This is better than toys!"',
       quiz_question: '',
       quiz_answers: []
     },
@@ -143,7 +155,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '',
       images: ['/images/page5-1.png'],
-      text_bottom: 'Shai: "Shprintza, did everyone always say Modeh Ani when they woke up?"\nShprintza: (sitting down beside him) "That\'s a wonderful question! Let me tell you about King David. Long, long ago, King David kept a beautiful harp beside his bed."\nShai: "A harp? In his BEDROOM?"\nShprintza: "Yes! Every morning at midnight, a gentle breeze from the North would blow through his window and make the harp sing — ting-tong-ting!"\nSpice: (strumming air guitar) "Like a rockstar! Koo-koo-ree-koo!"\nShprintza: "King David would wake up and immediately sing thanks to Hashem for his life — for his red hair, his eyes, his ability to play music… even his toes!"\nShai: (wiggling his toes) "Even toes? That\'s silly!"\nShprintza: "King David knew that every part of him was a gift. That\'s what Modeh Ani teaches us — to be grateful for everything, big and small."',
+      text_bottom: 'Shai: "Shira, did everyone always say Modeh Ani when they woke up?"\nShira: (sitting down beside him) "That\'s a wonderful question! Let me tell you about King David. Long, long ago, King David kept a beautiful harp beside his bed."\nShai: "A harp? In his BEDROOM?"\nShira: "Yes! Every morning at midnight, a gentle breeze from the North would blow through his window and make the harp sing — ting-tong-ting!"\nSpice: (strumming air guitar) "Like a rockstar! Koo-koo-ree-koo!"\nShira: "King David would wake up and immediately sing thanks to Hashem for his life — for his red hair, his eyes, his ability to play music… even his toes!"\nShai: (wiggling his toes) "Even toes? That\'s silly!"\nShira: "King David knew that every part of him was a gift. That\'s what Modeh Ani teaches us — to be grateful for everything, big and small."',
       quiz_question: '',
       quiz_answers: []
     },
@@ -151,7 +163,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '',
       images: ['/images/page6-1.png', '/images/page6-2.png', '/images/page6-3.png'],
-      text_bottom: 'The next morning, Shai woke up looking for his favorite toy car.\nShai: "Where is it? Where\'s my red race car? I NEED IT!"\nHe looked under the bed. Not there. He looked in his toy box. Not there either!\nShai:  Oy vey! "This is the WORST day ever”!\nSpice: (landing on his shoulder) "Shai! Shai! Remember what we learned?"\nShai: "But Spice… I really wanted to play with it!"\nShprintza: (kneeling down gently) "I know you\'re disappointed, Shai. But let\'s think — what gift do you have right now, even without your toy car?"\nShai paused. He touched his chest where his Neshama was.\nShai: (taking a deep breath) "My Neshama! Modeh Ani... thank You, Hashem, for giving me back my soul. Thank You for my eyes to look for toys, my hands to play, my family who loves me, and... and even for Spice, even when he\'s being silly!"\nSpice: "I\'m not silly — I\'m Koo-koo-ree-koo!"\nJust then, Shai’s little sister walked in, pushing the red race car.\nShai: "There it is! She had it the whole time!"\nShprintza: (smiling warmly) "See? When we start with gratitude, everything feels better."',
+      text_bottom: 'The next morning, Shai woke up looking for his favorite toy car.\nShai: "Where is it? Where\'s my red race car? I NEED IT!"\nHe looked under the bed. Not there. He looked in his toy box. Not there either!\nShai:  Oy vey! "This is the WORST day ever”!\nSpice: (landing on his shoulder) "Shai! Shai! Remember what we learned?"\nShai: "But Spice… I really wanted to play with it!"\nShira: (kneeling down gently) "I know you\'re disappointed, Shai. But let\'s think — what gift do you have right now, even without your toy car?"\nShai paused. He touched his chest where his Neshama was.\nShai: (taking a deep breath) "My Neshama! Modeh Ani... thank You, Hashem, for giving me back my soul. Thank You for my eyes to look for toys, my hands to play, my family who loves me, and... and even for Spice, even when he\'s being silly!"\nSpice: "I\'m not silly — I\'m Koo-koo-ree-koo!"\nJust then, Shai’s little sister walked in, pushing the red race car.\nShai: "There it is! She had it the whole time!"\nShira: (smiling warmly) "See? When we start with gratitude, everything feels better."',
       quiz_question: '',
       quiz_answers: []
     },
@@ -159,7 +171,7 @@ const PageContainer: React.FC = () => {
       page_type: 'interactive_quiz',
       text_top: '',
       images: ['/images/RESIZE 3_2 - Quiz 1 .jpg'],
-      text_bottom: 'Shprintza: "Every morning, start with gratitude." \nShai: "Even before slippers!"\nSpice: "Especially before breakfast! Koo-koo-ree-koo!"',
+      text_bottom: 'Shira: "Every morning, start with gratitude." \nShai: "Even before slippers!"\nSpice: "Especially before breakfast! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: [],
       questions: [
@@ -201,7 +213,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: 'Giggle Page',
       images: ['/images/giggle-page.png'],
-      text_bottom: 'Shai: "Shprintza… does my soul come wrapped like a Chanukah present with a bow?"\nSpice: "Of course! In bubble wrap — pop! pop! pop! Amen!"\nShprintza: (giggling) "Modeh Ani means \'I thank You.\'"\nSpice: "Ohhh… I thought it meant \'More Deli, honey!\'"\nShai: "Or \'More Silly Money!\'"\nSpice: "Or \'Moody Bunny!\'"\nEveryone bursts out laughing and tumbles onto the pillows.\nShprintza: (still giggling) "You two are impossible!"',
+      text_bottom: 'Shai: "Shira… does my soul come wrapped like a Chanukah present with a bow?"\nSpice: "Of course! In bubble wrap — pop! pop! pop! Amen!"\nShira: (giggling) "Modeh Ani means \'I thank You.\'"\nSpice: "Ohhh… I thought it meant \'More Deli, honey!\'"\nShai: "Or \'More Silly Money!\'"\nSpice: "Or \'Moody Bunny!\'"\nEveryone bursts out laughing and tumbles onto the pillows.\nShira: (still giggling) "You two are impossible!"',
       quiz_question: '',
       quiz_answers: []
     },
@@ -209,7 +221,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '🌟 Spice\'s Song 🌟',
       images: ['/images/song-page.png'],
-      text_bottom: 'Spice: (clearing his throat dramatically, standing on the bedpost) TTTO You’re my sunshine\n"Every morning when I\'m still sleeping, I open up my eyes and say, Thank You, Hashem, for my Neshama, And for giving me another day!"\nThen VERY loudly and proudly: continue w Same tune\n"Modeh Ani Lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha!"\nShprintza: (clapping) "Beautiful, Spice! You remembered every word!"\nShai: "You sound even better than a real rooster!"\nSpice: (puffing up his chest) "I\'m not just any chicken — I\'m a THANKFUL chicken! A GRATEFUL chicken! A—"\nShai & Shprintza: "We know, Spice!"\nSpice: "KOO-KOO-REE-KOOOOO!!!"',
+      text_bottom: 'Spice: (clearing his throat dramatically, standing on the bedpost) TTTO You’re my sunshine\n"Every morning when I\'m still sleeping, I open up my eyes and say, Thank You, Hashem, for my Neshama, And for giving me another day!"\nThen VERY loudly and proudly: continue w Same tune\n"Modeh Ani Lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha!"\nShira: (clapping) "Beautiful, Spice! You remembered every word!"\nShai: "You sound even better than a real rooster!"\nSpice: (puffing up his chest) "I\'m not just any chicken — I\'m a THANKFUL chicken! A GRATEFUL chicken! A—"\nShai & Shira: "We know, Spice!"\nSpice: "KOO-KOO-REE-KOOOOO!!!"',
       quiz_question: '',
       quiz_answers: []
     },
@@ -253,6 +265,7 @@ const PageContainer: React.FC = () => {
     // Stop any playing audio when navigating to a new page
     if (audioRef.current) {
       if (timeUpdateRef.current) {
+        audioRef.current.removeEventListener('ended', timeUpdateRef.current);
         audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
         timeUpdateRef.current = null;
       }
@@ -267,6 +280,7 @@ const PageContainer: React.FC = () => {
   const stopAudio = useCallback(() => {
     if (audioRef.current) {
       if (timeUpdateRef.current) {
+        audioRef.current.removeEventListener('ended', timeUpdateRef.current);
         audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
         timeUpdateRef.current = null;
       }
@@ -296,12 +310,12 @@ const PageContainer: React.FC = () => {
     }
   };
 
-  // Get timestamps for a given page index and quiz question index
-  const getTimestamps = useCallback((pageIdx: number, quizIdx: number, page: Page) => {
+  // Get audio URL for a given page index and quiz question index
+  const getAudioUrl = useCallback((pageIdx: number, quizIdx: number, page: Page): string | null => {
     if (page.page_type === 'interactive_quiz') {
-      return QUIZ_QUESTION_TIMESTAMPS[quizIdx];
+      return QUIZ_AUDIO_URLS[quizIdx] || null;
     }
-    return PAGE_AUDIO_TIMESTAMPS[pageIdx];
+    return PAGE_AUDIO_URLS[pageIdx] || null;
   }, []);
 
   // Play audio for current page
@@ -311,13 +325,13 @@ const PageContainer: React.FC = () => {
     const pageIdx = currentPageIndexRef.current;
     const quizIdx = quizQuestionIndexRef.current;
     const page = pages[pageIdx];
-    const timestamps = getTimestamps(pageIdx, quizIdx, page);
+    const audioUrl = getAudioUrl(pageIdx, quizIdx, page);
     
-    console.log('Playing audio for page:', pageIdx, 'quiz question:', quizIdx, 'timestamps:', timestamps);
+    console.log('Playing audio for page:', pageIdx, 'quiz question:', quizIdx, 'url:', audioUrl);
     
-    if (!timestamps) {
-      console.log('No audio timestamps for this page');
-      // If autoplay and no timestamps, move to next page
+    if (!audioUrl) {
+      console.log('No audio URL for this page');
+      // If autoplay and no audio, move to next page
       if (autoAdvance && pageIdx < totalPages - 1 && page.page_type !== 'interactive_quiz') {
         setCurrentPageIndex(prev => prev + 1);
         setSelectedAnswer('');
@@ -327,49 +341,65 @@ const PageContainer: React.FC = () => {
       return;
     }
     
-    // Remove any existing timeupdate listener
+    // Remove any existing listener
     if (timeUpdateRef.current) {
+      audioRef.current.removeEventListener('ended', timeUpdateRef.current);
       audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
     }
     
-    // Set the start time and play
-    audioRef.current.currentTime = timestamps.start;
+    // Set the audio source and play
+    audioRef.current.src = audioUrl;
+    // Use start time if specified, otherwise start from beginning
+    const startTime = PAGE_AUDIO_START_TIMES[pageIdx] || 0;
+    const endTime = PAGE_AUDIO_END_TIMES[pageIdx]; // undefined means play to end
+    audioRef.current.currentTime = startTime;
     audioRef.current.play().catch(err => console.error('Audio playback error:', err));
     setIsPlaying(true);
     
-    // Store end time and autoAdvance flag for the checkTime closure
-    const endTime = timestamps.end;
-    
-    // Set up listener to stop at end time and optionally advance
-    const checkTime = () => {
-      if (audioRef.current && audioRef.current.currentTime >= endTime) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-        
-        // Use refs to get current values
-        const currentIdx = currentPageIndexRef.current;
-        const currentPageData = pages[currentIdx];
-        
-        // If autoplay is enabled and not on quiz page, advance to next page
-        if (isAutoPlayRef.current && currentPageData.page_type !== 'interactive_quiz') {
-          if (currentIdx < totalPages - 1) {
-            setCurrentPageIndex(currentIdx + 1);
-            setSelectedAnswer('');
-            setQuizQuestionIndex(0);
-            setQuizCompleted(false);
-          } else {
-            // Reached the end, turn off autoplay
-            setIsAutoPlay(false);
-          }
+    // Function to handle audio completion (either natural end or end time reached)
+    const handleAudioComplete = () => {
+      setIsPlaying(false);
+      
+      // Use refs to get current values
+      const currentIdx = currentPageIndexRef.current;
+      const currentPageData = pages[currentIdx];
+      
+      // If autoplay is enabled and not on quiz page, advance to next page
+      if (isAutoPlayRef.current && currentPageData.page_type !== 'interactive_quiz') {
+        if (currentIdx < totalPages - 1) {
+          setCurrentPageIndex(currentIdx + 1);
+          setSelectedAnswer('');
+          setQuizQuestionIndex(0);
+          setQuizCompleted(false);
+        } else {
+          // Reached the end, turn off autoplay
+          setIsAutoPlay(false);
         }
-        // Note: For quiz pages, audio just stops after each question
-        // User must answer correctly before next question's audio can be played manually
       }
+      // Note: For quiz pages, audio just stops after each question
+      // User must answer correctly before next question's audio can be played manually
     };
     
-    timeUpdateRef.current = checkTime;
-    audioRef.current.addEventListener('timeupdate', checkTime);
-  }, [totalPages, getTimestamps, pages]);
+    // If there's an end time, use timeupdate to check; otherwise use ended event
+    if (endTime !== undefined) {
+      const checkTime = () => {
+        if (audioRef.current && audioRef.current.currentTime >= endTime) {
+          audioRef.current.pause();
+          audioRef.current.removeEventListener('timeupdate', checkTime);
+          handleAudioComplete();
+        }
+      };
+      timeUpdateRef.current = checkTime;
+      audioRef.current.addEventListener('timeupdate', checkTime);
+    } else {
+      // No end time specified, play to natural end
+      const onEnded = () => {
+        handleAudioComplete();
+      };
+      timeUpdateRef.current = onEnded;
+      audioRef.current.addEventListener('ended', onEnded);
+    }
+  }, [totalPages, getAudioUrl, pages]);
 
   // Handle autoplay page changes - only trigger when page changes, not when autoplay is first enabled
   const prevPageIndexRef = useRef(currentPageIndex);
@@ -393,6 +423,7 @@ const PageContainer: React.FC = () => {
     if (!isAutoPlay && audioRef.current) {
       // Clean up listener
       if (timeUpdateRef.current) {
+        audioRef.current.removeEventListener('ended', timeUpdateRef.current);
         audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
         timeUpdateRef.current = null;
       }
@@ -418,6 +449,7 @@ const PageContainer: React.FC = () => {
     if (isPlaying) {
       // Stop playing
       if (timeUpdateRef.current) {
+        audioRef.current.removeEventListener('ended', timeUpdateRef.current);
         audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
         timeUpdateRef.current = null;
       }
@@ -436,6 +468,7 @@ const PageContainer: React.FC = () => {
       setIsAutoPlay(false);
       if (audioRef.current) {
         if (timeUpdateRef.current) {
+          audioRef.current.removeEventListener('ended', timeUpdateRef.current);
           audioRef.current.removeEventListener('timeupdate', timeUpdateRef.current);
           timeUpdateRef.current = null;
         }
@@ -992,13 +1025,6 @@ const PageContainer: React.FC = () => {
           )}
         </div>
       </div>
-
-      {/* Hidden Audio Element */}
-      <audio
-        ref={audioRef}
-        src="https://dnltfxiymdfqmxtdbicj.supabase.co/storage/v1/object/public/audio/story-audio.mp3"
-        preload="auto"
-      />
 
       {/* Navigation Controls */}
       <div className="flex-none bg-white shadow-lg p-4 z-10">
