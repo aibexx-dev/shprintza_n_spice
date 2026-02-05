@@ -106,7 +106,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'cover',
       text_top: 'Shira n\' Spice: The "Modeh Ani" Song\n\nA Jewish bedtime story of gratitude and prayer for little souls\n\nBy: Rabbi Yossi Srugo - Miami Mohel',
-      images: ['/images/RESIZE 3_4 - Front Cover.jpg'],
+      images: ['/images/front-cover.jpg'],
       text_bottom: 'Join patient Shira, silly Shai and spectacular Spice-the KooKoo chicken, as they discover that the greatest gift we receive, it\'s the gift of life itself, given to us by God- Hashem, fresh every single morning!',
       quiz_question: '',
       quiz_answers: []
@@ -122,7 +122,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/page1-1.png', '/images/page1-2.png', '/images/page1-3.png'],
+      images: ['/images/page1-1.jpg', '/images/page1-2.jpg', '/images/page1-3.jpg'],
       text_bottom: 'Shai opened his eyes and sighed a big, sleepy sigh.\nShai: "Ugh… I\'m soooo sad. I don\'t have a new toy today."\nSuddenly, Shira appeared beside him, her face glowing with warmth.\nShira: "Good morning, Shai! You know, the best gift isn\'t a new toy."\nShai: "It\'s not? But toys are the BEST!"\nSpice flapped dramatically onto the pillow.\nSpice: "Koo-koo-ree-koo! Boker Tov, yeladim! The biggest gift is… a BAG FULL OF YUMMY WORMS!"\nShai: "EWWWW! Spice, that\'s gross!"',
       quiz_question: '',
       quiz_answers: []
@@ -130,7 +130,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/page2-1.png', '/images/page2-2.png'],
+      images: ['/images/page2-1.jpg', '/images/page2-2.jpg'],
       text_bottom: 'Shira: "Shai, every single morning Hashem gives us the most amazing present of all."\nShai: "Better than a LEGO spaceship with two astronauts AND a laser cannon?"\nSpice: "Better than a mountain of cornflakes with extra seeds on top?"\nShira: (smiling patiently) "Even better! Hashem gives you back your Neshama — your soul!"\nShai: "My Nesh-a-ma? What\'s that? Can I play with it?"\nShira: "Your Neshama is the spark of Hashem inside you — it\'s what makes you alive! It helps you think, feel, love, and be kind."\nShai: "Ohhh! Is THAT why I can think of silly jokes?"\nSpice: "Or FLYYYY?!" (flaps wildly and bumps into the lamp)\nShira: (laughing softly) "Exactly, Shai."',
       quiz_question: '',
       quiz_answers: []
@@ -138,7 +138,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/page3-1.png'],
+      images: ['/images/page3-1.jpg'],
       text_bottom: 'Shira: "When we sleep, our Neshama rests with Hashem. It goes up to Heaven! And when we wake up… Hashem sends it right back to us."\nShai: "Whoa! So my Neshama goes on a trip every night?"\nShira: "Yes! That\'s why we say Modeh Ani the very first thing when we wake up — even before we get out of bed, even before we wash our hands — to thank Hashem for giving us life again."\nSpice: "I\'m thankful for my magnificent feathers!" (poses like a supermodel)\nShai: "So I get my soul back every single morning? Even on Mondays?!"\nShira: "Every beautiful day, Shai. Every single one."\nSpice: "And I get… BREAKFAST! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: []
@@ -146,7 +146,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/page4-1.png'],
+      images: ['/images/page4-1.jpg'],
       text_bottom: 'Shira: "Let\'s celebrate being alive!"\nThey begin to sing and dance around the room:\nShira & Shai: "I\'m alive! I\'m alive! Hashem gave me my soul inside!"\nSpice: (spinning in circles) "I\'m aliiiive! Koo-koo-ree-koo! ¡Estoy vivo! Ani chai! Koo-koo-ree-koo!"\nShai: (jumping on the bed) "This is better than toys!"',
       quiz_question: '',
       quiz_answers: []
@@ -154,7 +154,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/page5-1.png'],
+      images: ['/images/page5-1.jpg'],
       text_bottom: 'Shai: "Shira, did everyone always say Modeh Ani when they woke up?"\nShira: (sitting down beside him) "That\'s a wonderful question! Let me tell you about King David. Long, long ago, King David kept a beautiful harp beside his bed."\nShai: "A harp? In his BEDROOM?"\nShira: "Yes! Every morning at midnight, a gentle breeze from the North would blow through his window and make the harp sing — ting-tong-ting!"\nSpice: (strumming air guitar) "Like a rockstar! Koo-koo-ree-koo!"\nShira: "King David would wake up and immediately sing thanks to Hashem for his life — for his red hair, his eyes, his ability to play music… even his toes!"\nShai: (wiggling his toes) "Even toes? That\'s silly!"\nShira: "King David knew that every part of him was a gift. That\'s what Modeh Ani teaches us — to be grateful for everything, big and small."',
       quiz_question: '',
       quiz_answers: []
@@ -162,7 +162,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '',
-      images: ['/images/page6-1.png', '/images/page6-2.png', '/images/page6-3.png'],
+      images: ['/images/page6-1.jpg', '/images/page6-2.jpg', '/images/page6-3.jpg'],
       text_bottom: 'The next morning, Shai woke up looking for his favorite toy car.\nShai: "Where is it? Where\'s my red race car? I NEED IT!"\nHe looked under the bed. Not there. He looked in his toy box. Not there either!\nShai:  Oy vey! "This is the WORST day ever”!\nSpice: (landing on his shoulder) "Shai! Shai! Remember what we learned?"\nShai: "But Spice… I really wanted to play with it!"\nShira: (kneeling down gently) "I know you\'re disappointed, Shai. But let\'s think — what gift do you have right now, even without your toy car?"\nShai paused. He touched his chest where his Neshama was.\nShai: (taking a deep breath) "My Neshama! Modeh Ani... thank You, Hashem, for giving me back my soul. Thank You for my eyes to look for toys, my hands to play, my family who loves me, and... and even for Spice, even when he\'s being silly!"\nSpice: "I\'m not silly — I\'m Koo-koo-ree-koo!"\nJust then, Shai’s little sister walked in, pushing the red race car.\nShai: "There it is! She had it the whole time!"\nShira: (smiling warmly) "See? When we start with gratitude, everything feels better."',
       quiz_question: '',
       quiz_answers: []
@@ -170,7 +170,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'interactive_quiz',
       text_top: '',
-      images: ['/images/RESIZE 3_2 - Quiz 1 .jpg'],
+      images: ['/images/page7-1.jpg'],
       text_bottom: 'Shira: "Every morning, start with gratitude." \nShai: "Even before slippers!"\nSpice: "Especially before breakfast! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: [],
@@ -179,32 +179,32 @@ const PageContainer: React.FC = () => {
           question: 'Why do we say Modeh Ani first thing when we wake up, even before getting out of bed?',
           answers: ['To get rid of bad breath?', 'To thank Hashem for our soul, our life, right away, before doing anything else!', 'So we can skip school?', 'To forget a bad dream?'],
           correctAnswer: 'To thank Hashem for our soul, our life, right away, before doing anything else!',
-          imageUrl: '/images/RESIZE 3_2 - Quiz 1 .jpg'
+          imageUrl: '/images/page7-1.jpg'
         },
         {
           question: ' What is a Neshama?',
           answers: [' A flying car that goes to the moon?', 'Our soul, a spark of Hashem that helps us think, feel, love, and be kind.', 'A submarine that looks like a whale?', 'A monkey that plays the trumpet?'],
           correctAnswer: 'Our soul, a spark of Hashem that helps us think, feel, love, and be kind.',
-          imageUrl: '/images/RESIZE 3_2 - Quiz 2.jpg'
+          imageUrl: '/images/page7-3.jpg'
         },
         {
           question: 'Where does our Neshama go when we sleep?',
           answers: ['It goes shopping for toys?', 'It visits the zoo?', 'It rests with Hashem in Heaven and returns when we wake up!', 'It stays in our shoes?'],
           correctAnswer: 'It rests with Hashem in Heaven and returns when we wake up!',
-          imageUrl: '/images/RESIZE 3_2 - Quiz 3.jpg'
+          imageUrl: '/images/page7-4.jpg'
         },
         {
           question: 'Why don\'t we say Hashem\'s name in Modeh Ani?',
           answers: ['Because we forgot it?', 'Because it\'s too early?', 'Because Spice is too loud?', 'Because we haven\'t washed our hands yet! We say "Melech chai v\'kayam" (Living and Eternal King) instead.'],
           correctAnswer: 'Because we haven\'t washed our hands yet! We say "Melech chai v\'kayam" (Living and Eternal King) instead.',
-          imageUrl: '/images/RESIZE 3_2 - Quiz 4 .jpg'
+          imageUrl: '/images/page7-5.jpg'
         }
       ]
     },
     {
       page_type: 'story',
       text_top: '🌟 Modeh Ani 🌟',
-      images: ['/images/page8-1.png'],
+      images: ['/images/page8-1.jpg'],
       text_bottom: 'מוֹדֶה אֲנִי לְפָנֶיךָ מֶלֶךְ חַי וְקַיָּם שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה רַבָּה אֱמוּנָתֶךָ\n\nModeh Ani lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha.\n\nMeaning: Thank You, Hashem, for returning my soul to me with kindness. How great is Your faithfulness!',
       quiz_question: '',
       quiz_answers: []
@@ -212,7 +212,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: 'Giggle Page',
-      images: ['/images/giggle-page.png'],
+      images: ['/images/giggle-page.jpg'],
       text_bottom: 'Shai: "Shira… does my soul come wrapped like a Chanukah present with a bow?"\nSpice: "Of course! In bubble wrap — pop! pop! pop! Amen!"\nShira: (giggling) "Modeh Ani means \'I thank You.\'"\nSpice: "Ohhh… I thought it meant \'More Deli, honey!\'"\nShai: "Or \'More Silly Money!\'"\nSpice: "Or \'Moody Bunny!\'"\nEveryone bursts out laughing and tumbles onto the pillows.\nShira: (still giggling) "You two are impossible!"',
       quiz_question: '',
       quiz_answers: []
@@ -220,7 +220,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'story',
       text_top: '🌟 Spice\'s Song 🌟',
-      images: ['/images/song-page.png'],
+      images: ['/images/song-page.jpg'],
       text_bottom: 'Spice: (clearing his throat dramatically, standing on the bedpost) TTTO You’re my sunshine\n"Every morning when I\'m still sleeping, I open up my eyes and say, Thank You, Hashem, for my Neshama, And for giving me another day!"\nThen VERY loudly and proudly: continue w Same tune\n"Modeh Ani Lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha!"\nShira: (clapping) "Beautiful, Spice! You remembered every word!"\nShai: "You sound even better than a real rooster!"\nSpice: (puffing up his chest) "I\'m not just any chicken — I\'m a THANKFUL chicken! A GRATEFUL chicken! A—"\nShai & Shira: "We know, Spice!"\nSpice: "KOO-KOO-REE-KOOOOO!!!"',
       quiz_question: '',
       quiz_answers: []
@@ -846,7 +846,7 @@ const PageContainer: React.FC = () => {
           <Card className="w-full max-w-6xl h-full bg-white/95 backdrop-blur shadow-2xl rounded-3xl overflow-hidden border-none ring-1 ring-black/5 flex flex-col md:flex-row">
             
             {/* Image Section */}
-            <div className="w-full md:w-1/2 h-64 md:h-full  flex flex-col gap-1 relative flex-none">
+            <div className="w-full md:w-1/2 h-[300px] sm:h-64 md:h-full  flex flex-col gap-1 relative flex-none">
               {currentPage.images.length === 1 ? (
                 /* Single Image Layout - For quiz pages, show question-specific image */
                 <div className="w-full h-full relative flex items-center justify-center bg-white/50 overflow-hidden">
