@@ -846,7 +846,7 @@ const PageContainer: React.FC = () => {
           <Card className="w-full max-w-6xl h-full bg-white/95 backdrop-blur shadow-2xl rounded-3xl overflow-hidden border-none ring-1 ring-black/5 flex flex-col md:flex-row">
             
             {/* Image Section */}
-            <div className="w-full md:w-1/2 h-[300px] sm:h-64 md:h-full  flex flex-col gap-1 relative flex-none">
+            <div className="w-full md:w-1/2 h-2/3 sm:h-64 md:h-full  flex flex-col gap-1 relative flex-none">
               {currentPage.images.length === 1 ? (
                 /* Single Image Layout - For quiz pages, show question-specific image */
                 <div className="w-full h-full relative flex items-center justify-center bg-white/50 overflow-hidden">
