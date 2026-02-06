@@ -6,6 +6,7 @@ import QuizPageLayout from './components/QuizPageLayout'
 import NavigationControls from './components/NavigationControls'
 import AudioButton from './components/AudioButton'
 import CoverPageLayout from './components/CoverPageLayout'
+import ReloadPrompt from './ReloadPrompt'
 
 const pages = [
   {
@@ -188,9 +189,9 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-green-100">
       <PageContainer>
         <ProgressBar current={currentPage + 1} total={pages.length} />
-        
+
         {page.page_type === 'cover' || page.page_type === 'back_cover' ? (
-          <CoverPageLayout 
+          <CoverPageLayout
             title={page.text_top}
             subtitle={page.text_bottom}
             imageUrl={page.image_url}
@@ -201,7 +202,7 @@ export default function App() {
             onNext={currentPage < pages.length - 1 ? nextPage : undefined}
           />
         ) : page.page_type === 'quiz' ? (
-          <QuizPageLayout 
+          <QuizPageLayout
             key={`quiz-${currentPage}`}
             question={page.quiz_question}
             imageUrl={page.image_url}
@@ -213,7 +214,7 @@ export default function App() {
             onNext={currentPage < pages.length - 1 ? nextPage : undefined}
           />
         ) : (
-          <StoryPageLayout 
+          <StoryPageLayout
             textTop={page.text_top}
             imageUrl={page.image_url}
             textBottom={page.text_bottom}
@@ -223,20 +224,21 @@ export default function App() {
             onNext={currentPage < pages.length - 1 ? nextPage : undefined}
           />
         )}
-        
+
         <div className="flex justify-between items-center mt-6">
-          <NavigationControls 
-            onPrev={prevPage} 
+          <NavigationControls
+            onPrev={prevPage}
             onNext={nextPage}
             canGoPrev={currentPage > 0}
             canGoNext={currentPage < pages.length - 1}
           />
-          <AudioButton 
-            audioSrc={page.audio_url} 
+          <AudioButton
+            audioSrc={page.audio_url}
             disabled={!page.audio_url}
           />
         </div>
       </PageContainer>
+      <ReloadPrompt />
     </div>
   )
 }
