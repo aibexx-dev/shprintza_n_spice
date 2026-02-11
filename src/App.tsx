@@ -159,7 +159,7 @@ const pages = [
   {
     page_type: 'back_cover',
     text_top: 'Thank you for reading!',
-    image_url: '/images/RESIZE 3_4 - back cover.jpg',
+    image_url: '/images/back-cover.jpg',
     text_bottom: 'We hope you enjoyed this adventure.',
     quiz_question: '',
     quiz_answers: [],

@@ -228,7 +228,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'back_cover',
       text_top: 'The End',
-      images: ['/images/RESIZE 3_4 - back cover.jpg'],
+      images: ['/images/back-cover.jpg'],
       text_bottom: 'A joyful bedtime and morning story that teaches gratitude, laughter, and one of the most important prayers every Jewish child learns — Modeh Ani.',
       quiz_question: '',
       quiz_answers: []
