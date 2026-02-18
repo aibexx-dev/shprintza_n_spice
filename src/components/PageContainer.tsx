@@ -114,7 +114,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'dedication',
       text_top: 'Dedicated to the thousands of precious souls I\'ve had the privilege to perform their Brit Milah— at the holy instant when heaven touches earth, and a new Neshama, soul, shines into this world.\nMay I merit that all those Neshamas shine always, as the stars shine in the heavens.\n— Rabbi Yossi Srugo- Miami Mohel',
-      images: ['/images/rabbi.png'],
+      images: ['/images/rabbi.jpg'],
       text_bottom: 'Special thanks to the amazing Collins family -Michael, Tiferet and their 2 cute boys Chaim Mordechai and Baby Adam Yehuda, whom I\'ve had the privilege and honor to do their Bris.\nThank you! Because of you, thousands of children will learn to pray to G-d and be thankful!\nMay this publication bring Hashem\'s blessing to you, spiritually, physically and in great abundance!',
       quiz_question: '',
       quiz_answers: []
@@ -228,7 +228,7 @@ const PageContainer: React.FC = () => {
     {
       page_type: 'back_cover',
       text_top: 'The End',
-      images: ['/images/RESIZE 3_4 - back cover.jpg'],
+      images: ['/images/back-cover.jpg'],
       text_bottom: 'A joyful bedtime and morning story that teaches gratitude, laughter, and one of the most important prayers every Jewish child learns — Modeh Ani.',
       quiz_question: '',
       quiz_answers: []
@@ -861,7 +861,7 @@ const PageContainer: React.FC = () => {
                         key={imageToShow}
                         src={imageToShow} 
                         alt="Story illustration"
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover object-[top_center] hover:scale-105 transition-transform duration-500"
                         onError={() => setImageErrors(prev => new Set(prev).add(imageToShow))}
                       />
                     );
@@ -877,7 +877,7 @@ const PageContainer: React.FC = () => {
                       <img 
                         src={currentPage.images[0]} 
                         alt="Story illustration 1"
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 999"
                         onError={() => setImageErrors(prev => new Set(prev).add(currentPage.images[0]))}
                       />
                     )}
@@ -889,7 +889,7 @@ const PageContainer: React.FC = () => {
                       <img 
                         src={currentPage.images[1]} 
                         alt="Story illustration 2"
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 1010"
                         onError={() => setImageErrors(prev => new Set(prev).add(currentPage.images[1]))}
                       />
                     )}
@@ -934,7 +934,7 @@ const PageContainer: React.FC = () => {
                       <img 
                         src={currentPage.images[2]} 
                         alt="Story illustration main"
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 1011"
                         onError={() => setImageErrors(prev => new Set(prev).add(currentPage.images[2]))}
                       />
                     )}
