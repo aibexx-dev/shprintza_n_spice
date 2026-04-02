@@ -10,28 +10,31 @@ const baseUrlSpanish = "https://pub-25dfe36dd1e8461d84b7c047833238e5.r2.dev/";
 
 const SpanishFiles = {
   intro: 'Cover%20page.m4a.mp3',
+  quizQ1: 'Quiz%20Q1%20spanish.m4a.mp3',
+  quizQ2: 'Quiz%20Q2%20spanish.m4a.mp3',
+  quizQ3: 'Quiz%20Q3%20spanish.m4a.mp3',
+  quizQ4: 'Quiz%20Q4%20spanish.m4a.mp3',
   dedication: 'dedication%20page%202%20spanish.m4a.mp3',
+  page10: 'page%2010%20spanish.m4a.mp3',
+  page11: 'page%2011%20spanish.m4a.mp3',
+  page12: 'page%2012%20spanish.m4a.mp3',
+  page13: 'page%2013%20spanish.m4a.mp3',
   page3: 'page%203%20spanish.mp3',
   page4: 'page%204%20spanish.mp3',
   page5: 'page%205%20spanish.m4a.mp3',
   page6: 'page%206%20spanish.m4a.mp3',
   page7: 'page%207%20spanish.m4a.mp3',
   page8: 'page%208%20spanish.m4a.mp3',
-  page9: 'page%209%20spanish.m4a.mp3',
-  page10: 'page%2010%20spanish.m4a.mp3',
-  page11: 'page%2011%20spanish.m4a.mp3',
-  page12: 'page%2012%20spanish.m4a.mp3',
-  page13: 'page%2013%20spanish.m4a.mp3',
-  quizQ1: 'Quiz%20Q1%20spanish.m4a.mp3',
-  quizQ2: 'Quiz%20Q2%20spanish.m4a.mp3',
-  quizQ3: 'Quiz%20Q3%20spanish.m4a.mp3',
-  quizQ4: 'Quiz%20Q4%20spanish.m4a.mp3',
+  page9: 'page%209%20spanish.m4a.mp3'
 };
 
 
 const EnglishFiles = {
   intro: 'Cover%20Page.mp3',
-  dedication: 'dedication%20page.m4a.mp3',
+  dedication: 'Cover%20Page.mp3',
+  page10: 'Page%2010%20.mp3',
+  page11: 'Page%2011.m4a.mp3',
+  page12: 'Page%2012.m4a.mp3',
   page3: 'Page%203.m4a.mp3',
   page4: 'Page%204.m4a.mp3',
   page5: 'Page%205.m4a.mp3',
@@ -39,14 +42,9 @@ const EnglishFiles = {
   page7: 'Page%207.m4a.mp3',
   page8: 'Page%208.m4a.mp3',
   page9: 'Page%209.m4a.mp3',
-  page10: 'Page%2010%20.mp3',
-  page11: 'Page%2011.m4a.mp3',
-  page12: 'Page%2012.m4a.mp3',
-  page13: 'Page%2013.m4a.mp3',
   quizQ1: 'Quiz%20Q1%20.m4a.mp3',
   quizQ2: 'Quiz%20Q2.m4a.mp3',
-  quizQ3: 'Quiz%20Q3.m4a.mp3',
-  quizQ4: 'Quiz%20Q4.m4a.mp3'
+  quizQ3: 'Quiz%20Q3.m4a.mp3'
 };
 
 
@@ -497,7 +495,7 @@ const PageContainer: React.FC = () => {
       ];
       fileKey = pageKeys[pageIdx];
     }
-
+    console.log(baseUrl, files, fileKey, isEn, language)
     if (!fileKey || !files[fileKey]) return null;
     return `${baseUrl}${files[fileKey]}`;
   }, [language]);
@@ -534,10 +532,9 @@ const PageContainer: React.FC = () => {
     // Set the audio source and play
     audioRef.current.src = audioUrl;
     // Use start time if specified, otherwise start from beginning
-    const splitTime = language === 'es' ? 16 : 17;
-    const startTime = (pageIdx === 1) ? splitTime : 0;
-    const endTime = (pageIdx === 0) ? undefined : undefined; // undefined means play to end
-    // audioRef.current.currentTime = startTime;
+    const startTime = (language === 'en' && pageIdx === 1) ? 17 : 0;
+    const endTime = (language === 'en' && pageIdx === 0) ? 17 : undefined; // undefined means play to end
+    audioRef.current.currentTime = startTime;
     audioRef.current.play().catch(err => console.error('Audio playback error:', err));
     setIsPlaying(true);
 
@@ -694,11 +691,6 @@ const PageContainer: React.FC = () => {
       setSelectedAnswer(answer);
     }
   };
-
-
-  useEffect(() => {
-    isAutoPlayRef.current = isAutoPlay;
-  }, [isAutoPlay]);
 
   const renderText = (text: string) => {
     return text.split('\n').map((line, index) => {
