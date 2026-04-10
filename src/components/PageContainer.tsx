@@ -131,7 +131,7 @@ const PageContainer: React.FC = () => {
       auto: 'Auto',
       stop: 'Stop',
       listen: 'Listen',
-      listenToSong: 'Listen to Song',
+      listenToSong: 'Tap to Hear Spice Sing',
       quizCompleted: '🎉 Great job! You completed the quiz! 🎉',
       meaning: 'Meaning:',
     },
@@ -185,7 +185,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '',
       images: ['/images/page3-1.jpg'],
-      text_bottom: 'Shira: "When we sleep, our Neshama rests with Hashem. It goes up to Heaven! And when we wake up… Hashem sends it right back to us."\nShai: "Whoa! So my Neshama goes on a trip every night?"\nShira: "Yes! That\'s why we say Modeh Ani the very first thing when we wake up — even before we get out of bed, even before we wash our hands — to thank Hashem for giving us life again."\nSpice: "I\'m thankful for my magnificent feathers!" (poses like a supermodel)\nShai: "So I get my soul back every single morning? Even on Mondays?!"\nShira: "Every beautiful day, Shai. Every single one."\nSpice: "And I get… BREAKFAST! Koo-koo-ree-koo!"',
+      text_bottom: 'Shira: "When we sleep, our Neshama rests with Hashem. It goes up to Heaven! And when Hashem sends it back to us, WE WAKE UP!"\nShai: "Whoa! So my Neshama goes on a trip every night?"\nShira: "Yes! That\'s why we say Modeh Ani the very first thing when we wake up — even before we get out of bed, even before we wash our hands — to thank Hashem for giving us life again."\nSpice: "I\'m thankful for my magnificent feathers!" (poses showing her feathers)\nShai: "So I get my soul back every single morning? Even on Mondays?!"\nShira: "Every beautiful day, Shai. Every single one."\nSpice: "And I get… BREAKFAST! Koo-koo-ree-koo!"',
       quiz_question: '',
       quiz_answers: []
     },
@@ -251,7 +251,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '🌟 Modeh Ani 🌟',
       images: ['/images/page8-1.jpg'],
-      text_bottom: 'מוֹדֶה אֲנִי לְפָנֶֽיךָ מֶֽלֶךְ חַי וְקַיָּם שֶׁהֶחֱזַֽרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶֽךָ\n\nModeh Ani lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha.\n\nMeaning: Thank You, Hashem, for returning my soul to me with kindness. How great is Your faithfulness!',
+      text_bottom: 'מוֹדֶה אֲנִי לְפָנֶֽיךָ מֶֽלֶךְ חַי וְקַיָּם שֶׁהֶחֱזַֽרְתָּ \nבִּי נִשְׁמָתִי בְּחֶמְלָה, רַבָּה אֱמוּנָתֶֽךָ\n\nModeh Ani lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha.\n\nMeaning: Thank You, Hashem, for returning my soul to me with kindness. How great is Your faithfulness!',
       quiz_question: '',
       quiz_answers: []
     },
@@ -267,7 +267,7 @@ const PageContainer: React.FC = () => {
       page_type: 'story',
       text_top: '🌟 Spice\'s Song 🌟',
       images: ['/images/song-page.jpg'],
-      text_bottom: 'Spice: (clearing his throat dramatically, standing on the bedpost)\n"Every morning when I\'m still sleeping, I open up my eyes and say, Thank You, Hashem, for my Neshama, And for giving me another day!"\nThen everyone joined VERY loudly: \n"Modeh Ani Lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha!"\nShira: (clapping) "Beautiful, Spice! You remembered every word!"\nShai: "You sound even better than a real rooster!"\nSpice: (puffing up his chest) "I\'m not just any chicken — I\'m a THANKFUL chicken! A GRATEFUL chicken! A—"\nShai & Shira: "We know, Spice!"\nSpice: "KOO-KOO-REE-KOOOOO!!!"',
+      text_bottom: 'Spice: (clearing his throat dramatically, standing on the bedpost)\n"Every morning when I\'m still sleeping, I open up my eyes and say, Thank You, Hashem, for my Neshama, And for giving me another day!"\nThen everyone joined VERY loudly: \n"Modeh Ani Lefanecha, Melech chai v\'kayam, Shehechezarta bi nishmati bechemlah, Rabba emunatecha!"\nShira: (clapping) "Beautiful, Spice! You remembered every word!"\nShai: "You sound even better than a real chicken!"\nSpice: (puffing up his chest) "I\'m not just any chicken — I\'m a THANKFUL chicken! A GRATEFUL chicken! A—"\nShai & Shira: "We know, Spice!"\nSpice: "KOO-KOO-REE-KOOOOO!!!"',
       quiz_question: '',
       quiz_answers: []
     },
