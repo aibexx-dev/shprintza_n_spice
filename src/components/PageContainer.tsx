@@ -9,43 +9,43 @@ const baseUrlEnglish = "https://pub-e636047e1907470b8188b143fe791978.r2.dev/";
 const baseUrlSpanish = "https://pub-25dfe36dd1e8461d84b7c047833238e5.r2.dev/";
 
 const SpanishFiles = {
-  intro: 'Cover%20page.m4a.mp3',
-  dedication: 'dedication%20page%202%20spanish.m4a.mp3',
-  page3: 'page%203%20spanish.mp3',
+  intro: 'Cover%20page%20spanish.m4a.mp3', //ok
+  dedication: '', // no audio for dedication page in Spanish
+  page3: 'page%203%20spanish.mp3', //ok
   page4: 'page%204%20spanish.mp3',
-  page5: 'page%205%20spanish.m4a.mp3',
-  page6: 'page%206%20spanish.m4a.mp3',
-  page7: 'page%207%20spanish.m4a.mp3',
-  page8: 'page%208%20spanish.m4a.mp3',
-  page9: 'page%209%20spanish.m4a.mp3',
-  page10: 'page%2010%20spanish.m4a.mp3',
+  page5: 'page%205%20spanish.m4a.mp3', //ok
+  page6: 'page%206%20spanish.m4a.mp3', // ok
+  page7: '', // no audio for page 7 in Spanish right now
+  page8: '',// no audio for page 7 in Spanish right now
+  page9: '',// no audio for page 7 in Spanish right now
+  page10: '',// no audio for page 7 in Spanish right now
   page11: 'page%2011%20spanish.m4a.mp3',
-  page12: 'page%2012%20spanish.m4a.mp3',
-  page13: 'page%2013%20spanish.m4a.mp3',
-  quizQ1: 'Quiz%20Q1%20spanish.m4a.mp3',
-  quizQ2: 'Quiz%20Q2%20spanish.m4a.mp3',
-  quizQ3: 'Quiz%20Q3%20spanish.m4a.mp3',
-  quizQ4: 'Quiz%20Q4%20spanish.m4a.mp3',
+  page12: '',// no audio for page 7 in Spanish right now
+  page13: '',// no audio for page 7 in Spanish right now
+  quizQ1: 'Quiz%20Q1%20spanish.m4a.mp3', //ok
+  quizQ2: 'Quiz%20Q2%20spanish.m4a.mp3', //ok
+  quizQ3: 'Quiz%20Q3%20spanish.m4a.mp3', //ok
+  quizQ4: 'Quiz%20Q4%20spanish.m4a.mp3', //ok
 };
 
 
 const EnglishFiles = {
-  intro: 'Cover%20Page.mp3',
-  dedication: 'dedication%20page.m4a.mp3',
-  page3: 'Page%203.m4a.mp3',
-  page4: 'Page%204.m4a.mp3',
-  page5: 'Page%205.m4a.mp3',
-  page6: 'Page%206.m4a.mp3',
-  page7: 'Page%207.m4a.mp3',
-  page8: 'Page%208.m4a.mp3',
-  page9: 'Page%209.m4a.mp3',
-  page10: 'Page%2010%20.mp3',
-  page11: 'Page%2011.m4a.mp3',
-  page12: 'Page%2012.m4a.mp3',
-  page13: 'Page%2013.m4a.mp3',
-  quizQ1: 'Quiz%20Q1%20.m4a.mp3',
-  quizQ2: 'Quiz%20Q2.m4a.mp3',
-  quizQ3: 'Quiz%20Q3.m4a.mp3',
+  intro: 'Cover%20Page.mp3', //ok
+  dedication: '', // no audio for dedication page in English
+  page3: 'Page%203.m4a.mp3', //ok
+  page4: 'Page%204.m4a.mp3', //ok
+  page5: 'Page%205.m4a.mp3', //ok
+  page6: 'Page%206.m4a.mp3', //ok
+  page7: 'Page%207.m4a.mp3', //ok
+  page8: 'Page%208.m4a.mp3', //ok
+  page9: 'Page%209.m4a.mp3', //ok
+  page10: 'Page%2010%20.mp3', //ok
+  page11: 'Page%2011.m4a.mp3', //ok
+  page12: 'Page%2012.m4a.mp3', //ok
+  page13: 'Page%2013.mp3', //ok
+  quizQ1: 'Quiz%20Q1%20.m4a.mp3', //ok
+  quizQ2: 'Quiz%20Q2.m4a.mp3', //ok
+  quizQ3: 'Quiz%20Q3.m4a.mp3', //ok
   quizQ4: 'Quiz%20Q4.m4a.mp3'
 };
 
