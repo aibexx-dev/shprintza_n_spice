@@ -16,43 +16,43 @@ const baseUrlEnglish = "https://pub-e636047e1907470b8188b143fe791978.r2.dev/";
 const baseUrlSpanish = "https://pub-25dfe36dd1e8461d84b7c047833238e5.r2.dev/";
 
 const SpanishFiles = {
-  intro: 'Cover%20page.m4a.mp3',
-  dedication: 'dedication%20page%202%20spanish.m4a.mp3',
-  page3: 'page%203%20spanish.mp3',
+  intro: 'Cover%20page%20spanish.m4a.mp3', //ok
+  dedication: '', // no audio for dedication page in Spanish
+  page3: 'page%203%20spanish.mp3', //ok
   page4: 'page%204%20spanish.mp3',
-  page5: 'page%205%20spanish.m4a.mp3',
-  page6: 'page%206%20spanish.m4a.mp3',
-  page7: 'page%207%20spanish.m4a.mp3',
-  page8: 'page%208%20spanish.m4a.mp3',
-  page9: 'page%209%20spanish.m4a.mp3',
-  page10: 'page%2010%20spanish.m4a.mp3',
-  page11: 'page%2011%20spanish.m4a.mp3',
-  page12: 'page%2012%20spanish.m4a.mp3',
-  page13: 'page%2013%20spanish.m4a.mp3',
-  quizQ1: 'Quiz%20Q1%20spanish.m4a.mp3',
-  quizQ2: 'Quiz%20Q2%20spanish.m4a.mp3',
-  quizQ3: 'Quiz%20Q3%20spanish.m4a.mp3',
-  quizQ4: 'Quiz%20Q4%20spanish.m4a.mp3',
+  page5: 'page%205%20spanish.m4a.mp3', //ok
+  page6: 'page%206%20spanish.m4a.mp3', // ok
+  page7: '', // no audio for page 7 in Spanish right now checking with the client 
+  page8: 'page%208%20spanish.m4a.mp3',// ok
+  page9: 'page%209%20spanish.m4a.mp3', //ok
+  page10: 'page%2012%20spanish.m4a.mp3',// ok
+  page11: 'page%2011%20spanish.m4a.mp3', //ok
+  page12: 'page%2012%20spanish.m4a.mp3', //ok
+  page13: 'page%2013%20spanish.m4a.mp3',// ok
+  quizQ1: 'Quiz%20Q1%20spanish.m4a.mp3', //ok
+  quizQ2: 'Quiz%20Q2%20spanish.m4a.mp3', //ok
+  quizQ3: 'Quiz%20Q3%20spanish.m4a.mp3', //ok
+  quizQ4: 'Quiz%20Q4%20spanish.m4a.mp3', //ok
 };
 
 
 const EnglishFiles = {
-  intro: 'Cover%20Page.mp3',
-  dedication: 'dedication%20page.m4a.mp3',
-  page3: 'Page%203.m4a.mp3',
-  page4: 'Page%204.m4a.mp3',
-  page5: 'Page%205.m4a.mp3',
-  page6: 'Page%206.m4a.mp3',
-  page7: 'Page%207.m4a.mp3',
-  page8: 'Page%208.m4a.mp3',
-  page9: 'Page%209.m4a.mp3',
-  page10: 'Page%2010%20.mp3',
-  page11: 'Page%2011.m4a.mp3',
-  page12: 'Page%2012.m4a.mp3',
-  page13: 'Page%2013.m4a.mp3',
-  quizQ1: 'Quiz%20Q1%20.m4a.mp3',
-  quizQ2: 'Quiz%20Q2.m4a.mp3',
-  quizQ3: 'Quiz%20Q3.m4a.mp3',
+  intro: 'Cover%20Page.mp3', //ok
+  dedication: '', // no audio for dedication page in English
+  page3: 'Page%203.m4a.mp3', //ok
+  page4: 'Page%204.m4a.mp3', //ok
+  page5: 'Page%205.m4a.mp3', //ok
+  page6: 'Page%206.m4a.mp3', //ok
+  page7: 'Page%207.m4a.mp3', //ok
+  page8: 'Page%208.m4a.mp3', //ok
+  page9: 'Page%209.m4a.mp3', //ok
+  page10: 'Page%2010%20.mp3', //ok
+  page11: 'Page%2011.m4a.mp3', //ok
+  page12: 'Page%2012.m4a.mp3', //ok
+  page13: 'Page%2013.mp3', //ok
+  quizQ1: 'Quiz%20Q1%20.m4a.mp3', //ok
+  quizQ2: 'Quiz%20Q2.m4a.mp3', //ok
+  quizQ3: 'Quiz%20Q3.m4a.mp3', //ok
   quizQ4: 'Quiz%20Q4.m4a.mp3'
 };
 
@@ -487,23 +487,16 @@ const PageContainer: React.FC = () => {
     }
   };
 
-  // Get audio URL for a given page index and quiz question index
-  const getAudioUrl = useCallback((pageIdx: number, quizIdx: number, page: Page): string | null => {
+  // Get audio URL for a given page index
+  const getAudioUrl = useCallback((pageIdx: number): string | null => {
     const isEn = language === 'en';
     const baseUrl = isEn ? baseUrlEnglish : baseUrlSpanish;
     const files: any = isEn ? EnglishFiles : SpanishFiles;
-    let fileKey = '';
-
-    if (page.page_type === 'interactive_quiz') {
-      const quizKeys = ['quizQ1', 'quizQ2', 'quizQ3', 'quizQ4'];
-      fileKey = quizKeys[quizIdx];
-    } else {
-      const pageKeys = [
-        'intro', 'dedication', 'page3', 'page4', 'page5', 'page6',
-        'page7', 'page8', '', 'page9', 'page10', 'page11', 'page12'
-      ];
-      fileKey = pageKeys[pageIdx];
-    }
+    const pageKeys = [
+      'intro', 'dedication', 'page3', 'page4', 'page5', 'page6',
+      'page7', 'page8', 'page9', 'page10', 'page11', 'page12', 'page13'
+    ];
+    const fileKey = pageKeys[pageIdx];
 
     if (!fileKey || !files[fileKey]) return null;
     return `${baseUrl}${files[fileKey]}`;
@@ -514,11 +507,10 @@ const PageContainer: React.FC = () => {
     if (!audioRef.current) return;
 
     const pageIdx = currentPageIndexRef.current;
-    const quizIdx = quizQuestionIndexRef.current;
     const page = pages[pageIdx];
-    const audioUrl = getAudioUrl(pageIdx, quizIdx, page);
+    const audioUrl = getAudioUrl(pageIdx);
 
-    console.log('Playing audio for page:', pageIdx, 'quiz question:', quizIdx, 'url:', audioUrl);
+    console.log('Playing audio for page:', page, pageIdx, 'url:', audioUrl);
 
     if (!audioUrl) {
       console.log('No audio URL for this page');
