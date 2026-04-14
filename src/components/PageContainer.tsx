@@ -20,7 +20,7 @@ const SpanishFiles = {
   page9: 'page%209%20spanish.m4a.mp3', //ok
   page10: 'page%2012%20spanish.m4a.mp3',// ok
   page11: 'page%2011%20spanish.m4a.mp3', //ok
-  page12: '',
+  page12: 'page%2012%20spanish.m4a.mp3', //ok
   page13: 'page%2013%20spanish.m4a.mp3',// ok
   quizQ1: 'Quiz%20Q1%20spanish.m4a.mp3', //ok
   quizQ2: 'Quiz%20Q2%20spanish.m4a.mp3', //ok
