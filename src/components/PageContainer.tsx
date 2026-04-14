@@ -1176,7 +1176,7 @@ const PageContainer: React.FC = () => {
                       <div className="text-base md:text-xl text-gray-700 leading-relaxed font-serif">
                         {currentPage.text_top === '🌟 Modeh Ani 🌟'
                           ? currentPage.text_bottom.split('\n').map((line, i) => (
-                            <p key={i} className={`mb-4 ${i === 0 || i === 1 ? 'text-2xl font-bold text-blue-600' : ''} ${line.startsWith(t.meaning) || line.startsWith('Meaning:') ? 'italic text-gray-600 mt-6' : ''}`}>
+                            <p key={i} className={`mb-4 ${i === 0 || i === 1 ? 'text-2xl font-bold ' : ''} ${line.startsWith(t.meaning) || line.startsWith('Meaning:') ? 'italic text-gray-600 mt-6' : ''}`}>
                               {line}
                             </p>
                           ))
